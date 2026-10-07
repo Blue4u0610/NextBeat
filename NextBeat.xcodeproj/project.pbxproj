@@ -209,13 +209,16 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					1E8429BA7720BE06A79B5142 = {
+						DevelopmentTeam = R487W86632;
 						ProvisioningStyle = Automatic;
 					};
 					91A195EE6B736A3A22BE6863 = {
+						DevelopmentTeam = R487W86632;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 974840DBE019BB8EA56F76D5;
 					};
 					974840DBE019BB8EA56F76D5 = {
+						DevelopmentTeam = R487W86632;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -319,7 +322,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blue4u0610.nextbeat.widget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -330,7 +333,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_GROUP_IDENTIFIER = group.com.example.nextbeat;
+				APP_GROUP_IDENTIFIER = group.com.blue4u0610.nextbeat;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -363,6 +366,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = R487W86632;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -404,7 +408,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blue4u0610.nextbeat;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -422,7 +426,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blue4u0610.nextbeat;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -440,7 +444,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blue4u0610.nextbeat.widget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -457,7 +461,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blue4u0610.nextbeat.uitests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = NextBeat;
@@ -468,7 +472,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_GROUP_IDENTIFIER = group.com.example.nextbeat;
+				APP_GROUP_IDENTIFIER = group.com.blue4u0610.nextbeat;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -501,6 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = R487W86632;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -533,7 +538,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blue4u0610.nextbeat.uitests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = NextBeat;

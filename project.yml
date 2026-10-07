@@ -9,7 +9,8 @@ settings:
     TARGETED_DEVICE_FAMILY: "1"
     IPHONEOS_DEPLOYMENT_TARGET: "17.0"
     CODE_SIGN_STYLE: Automatic
-    APP_GROUP_IDENTIFIER: group.com.example.nextbeat
+    DEVELOPMENT_TEAM: R487W86632
+    APP_GROUP_IDENTIFIER: group.com.blue4u0610.nextbeat
 targets:
   NextBeat:
     type: application
@@ -38,7 +39,7 @@ targets:
           - $(APP_GROUP_IDENTIFIER)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.nextbeat
+        PRODUCT_BUNDLE_IDENTIFIER: com.blue4u0610.nextbeat
         INFOPLIST_KEY_CFBundleDisplayName: NextBeat
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     dependencies:
@@ -67,7 +68,7 @@ targets:
           - $(APP_GROUP_IDENTIFIER)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.nextbeat.widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.blue4u0610.nextbeat.widget
         INFOPLIST_KEY_CFBundleDisplayName: NextBeat Widget
         SKIP_INSTALL: YES
         APPLICATION_EXTENSION_API_ONLY: YES
@@ -80,7 +81,7 @@ targets:
       - target: NextBeat
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.nextbeat.uitests
+        PRODUCT_BUNDLE_IDENTIFIER: com.blue4u0610.nextbeat.uitests
         GENERATE_INFOPLIST_FILE: YES
 schemes:
   NextBeat:

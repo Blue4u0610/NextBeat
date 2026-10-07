@@ -4,7 +4,7 @@
 
 ## 当前开发状态
 
-项目文件：`NextBeat.xcodeproj`。已在 macOS 27、Xcode 27 和 iOS 27 的 iPhone 17 Pro Max 模拟器上构建并运行。核心 XCTest、命令行检查与模拟器界面测试覆盖计划导入、逐项编辑、重启后持久保存和自省语开关。中号与纵向超大组件都已实际添加到模拟器主屏幕；组件能读取共享计划及设置。当前设计的真尺寸截图见 `Screenshots/nextbeat-widget-refined-light.png` 与 `Screenshots/nextbeat-widget-refined-dark.png`。真机安装和个人账号签名尚须由你按下文在 Xcode 中完成。
+项目文件：`NextBeat.xcodeproj`。已在 macOS 27、Xcode 27 和 iOS 27 的 iPhone 17 Pro Max 模拟器上构建并运行。核心 XCTest、命令行检查与模拟器界面测试覆盖计划导入、逐项编辑、重启后持久保存和自省语开关。中号与纵向超大组件都已实际添加到模拟器主屏幕；组件能读取共享计划及设置。当前设计的真尺寸截图见 `Screenshots/nextbeat-widget-refined-light.png` 与 `Screenshots/nextbeat-widget-refined-dark.png`。2026-10-07 已用 Personal Team 对 App 与 Widget 签名，并在连接的 iPhone 上完成最终 Bundle ID 的安装和 App 启动；两个签名配置使用相同的 App Group。真机主屏幕小组件仍需按下文手动添加。
 
 ## 主屏幕组件与自省语
 
@@ -48,16 +48,16 @@ NextBeat 提供小号、中号、普通大号及 **iOS 27 的纵向超大号**�
 
 无需预先购买 Apple Developer Program 会员。Apple 当前的 [iOS 能力表](https://developer.apple.com/help/account/reference/supported-capabilities-ios) 将 App Groups 列在免费 Apple Developer 账号可用能力中；仍须以 Xcode 对你的设备签名结果为准。
 
-1. 在 Xcode 打开 **Xcode → Settings → Accounts**，用你自己的 Apple 账号登录。若账号没有付费会员，Xcode 会显示 **Personal Team**。无需把账号或密码写进项目。
-2. 在项目导航器点最上方 **NextBeat**，分别选 **NextBeat** 与 **NextBeatWidget** 两个 target。在 **Signing & Capabilities** 中都勾选 **Automatically manage signing**，并选同一个 Team。
-3. 把两个 target 的 **Bundle Identifier** 改成你自己的唯一值，例如 `com.你的代号.nextbeat` 与 `com.你的代号.nextbeat.widget`。两者须不同，Widget ID 建议以 App ID 加 `.widget` 结尾。当前 `com.example.nextbeat` 仅为占位符。
-4. 在项目的 **Build Settings** 搜索 `APP_GROUP_IDENTIFIER`，将当前 `group.com.example.nextbeat` 改为唯一 ID，例如 `group.com.你的代号.nextbeat`。确认两个 target 的 **App Groups** capability 都勾选了同一个 Group。`App/NextBeat.entitlements` 与 `Widget/NextBeatWidget.entitlements` 使用此 build setting；两份 Info.plist 的 `NextBeatAppGroup` 也使用它。若 Xcode 没有显示 App Groups 行，请给两个 target 都点 **+ Capability → App Groups** 并选择同一 Group。
-5. 用 USB 连接 iPhone，解锁并在手机上点“信任此电脑”（如果出现）。在 Xcode 顶部运行目的地选你的 iPhone；如 Xcode 要求注册设备或修复签名，按它的提示操作。不要选择付费服务，除非你自己决定加入。
-6. 在 iPhone **设置 → 隐私与安全性 → 开发者模式** 打开开关，按提示重启并再次确认。这个选项可能在首次与 Xcode 配对后才出现。回到 Xcode 按 **⌘R**；App 和 Widget 会一起安装。
+1. 在 Xcode 打开 **Xcode → Settings → Accounts**，确认已登录你的 Apple 账号并显示 **Personal Team**。本机已完成这一步；在另一台 Mac 上需自行登录，不要把账号密码写入项目或发给他人。
+2. 打开 `NextBeat.xcodeproj`，在项目导航器点最上方 **NextBeat**，分别选 **NextBeat** 与 **NextBeatWidget** 两个 target。在 **Signing & Capabilities** 确认两者都勾选 **Automatically manage signing**，并选择同一个 Personal Team。仓库当前在 `project.yml` 中配置的 Team ID 为 `R487W86632`；换账号或换 Team 时，需要同步修改此文件并重新生成项目，或在 Xcode 中调整两个 target。
+3. 确认 App 的 **Bundle Identifier** 是 `com.blue4u0610.nextbeat`，Widget 是 `com.blue4u0610.nextbeat.widget`。项目的 `APP_GROUP_IDENTIFIER` 是 `group.com.blue4u0610.nextbeat`，两个 target 的 **App Groups** capability 必须选同一个 Group。两份 entitlements 与 Info.plist 都使用这一设置。若新账号无法注册这些 ID，给 App、Widget 和 App Group 选择一组新的唯一 ID，并在 `project.yml` 中同步修改后运行 `xcodegen generate`。不要只改其中一个 target。
+4. 用 USB 连接并解锁 iPhone；若出现提示，在手机上点“信任此电脑”。在 Xcode 顶部选择该 iPhone 作为运行目的地。若 Xcode 要求注册设备或修复签名，按界面提示完成。无需购买 Apple Developer Program 会员。
+5. 在 iPhone **设置 → 隐私与安全性 → 开发者模式** 打开开关，按提示重启并再次确认；本机连接的手机已完成此步骤。回到 Xcode 按 **⌘R**，等待 App 与内含的 Widget Extension 一同安装。首次签名时若 macOS 钥匙串提示允许 `codesign` 使用 **Apple Development** 私钥，请在本机输入 Mac 登录密码并允许，不要把密码发给任何人。
+6. 如安装后点击 App 显示“未受信任的开发者”，在 iPhone **设置 → 通用 → VPN 与设备管理 → 开发者 App** 中选择该个人开发者并点“信任”；若未显示该条目，先点一次主屏幕上的 NextBeat 图标。完成后重新打开 App。
 7. 在 iPhone 主屏幕长按空白处，点 **编辑/添加小组件**（具体文字取决于 iOS 版本），搜索 **NextBeat**。iOS 27 选择纵向超大号；较旧的 iOS 选择普通大号。点小组件会打开 App。
-8. 首次运行若 App 显示共享存储错误，先检查两个 target 的 Team、Bundle ID、App Groups ID 和签名是否一致，再重新运行。不能把数据改存到 App 的私有目录来掩盖错误。
+8. 首次运行若 App 显示共享存储错误，检查两个 target 的 Team、Bundle ID、App Groups ID 和签名是否一致，再重新运行。不能把数据改存到 App 的私有目录来掩盖错误。
 
-Apple 的 [免费个人账号说明](https://developer.apple.com/help/account/basics/about-your-developer-account)指出：个人签发的设备安装 provisioning profile **7 天后过期**，届时需在 Xcode 重新构建并安装；每台设备最多 3 个此类 App，设备及 App ID 也有免费额度限制。重装时保持相同 Bundle ID 和 App Group ID，可避免改变存储位置；操作前建议从 App 的“导出 JSON”备份计划。Xcode 在签名时如报告 App Groups 对该账号不可用，应把具体错误回传核查，不能声称 Widget 已可靠共享数据。
+Apple 的 [免费个人账号说明](https://developer.apple.com/help/account/basics/about-your-developer-account)指出：个人签发的设备安装 provisioning profile **7 天后过期**。过期后重新连接 iPhone，在 Xcode 选设备并按 **⌘R** 重新签名、构建和安装；每台设备最多 3 个此类 App，设备及 App ID 也有免费额度限制。重新安装时保持相同 Bundle ID 和 App Group ID，以免改变共享存储位置；操作前建议从 App 的“导出 JSON”备份计划。Xcode 在签名时如报告 App Groups 对该账号不可用，应检查具体错误，不能声称 Widget 已可靠共享数据。
 
 ## 开发命令
 
