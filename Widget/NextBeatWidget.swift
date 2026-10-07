@@ -83,8 +83,8 @@ struct NextBeatWidgetEntryView: View {
     @Environment(\.colorScheme) private var colorScheme
     @ScaledMetric(relativeTo: .caption2) private var scaledGridTime: CGFloat = 7.8
     @ScaledMetric(relativeTo: .caption) private var scaledGridTitle: CGFloat = 9.3
-    @ScaledMetric(relativeTo: .caption2) private var scaledWeekday: CGFloat = 9
-    @ScaledMetric(relativeTo: .caption2) private var scaledDayNumber: CGFloat = 16
+    @ScaledMetric(relativeTo: .caption2) private var scaledWeekday: CGFloat = 14
+    @ScaledMetric(relativeTo: .caption2) private var scaledDayNumber: CGFloat = 9
     @ScaledMetric(relativeTo: .caption2) private var scaledQuoteHeight: CGFloat = 22
     @ScaledMetric(relativeTo: .caption) private var scaledHeadingHeight: CGFloat = 25
     @ScaledMetric(relativeTo: .body) private var scaledFocusHeight: CGFloat = 96
@@ -245,7 +245,7 @@ struct NextBeatWidgetEntryView: View {
                 }
                 if showsFooterReflection {
                     footerReflection
-                        .frame(height: footerReflectionHeight)
+                        .frame(height: footerReflectionHeight, alignment: .bottom)
                 }
             }
             .padding(12)
@@ -282,17 +282,20 @@ struct NextBeatWidgetEntryView: View {
         let dayNumber = dateParts(day.date)?.day ?? index + 1
 
         return VStack(spacing: 0) {
-            VStack(spacing: 2) {
-                Text(weekdays[index])
-                    .font(.system(size: min(scaledWeekday, 15), weight: isToday ? .semibold : .medium))
-                    .foregroundStyle(isToday ? accent : mutedInk)
+            VStack(spacing: 1) {
                 Text("\(dayNumber)")
-                    .font(.system(size: min(scaledDayNumber, 21), weight: .semibold, design: .rounded).monospacedDigit())
+                    .font(.system(size: min(scaledDayNumber, 12), weight: .medium, design: .rounded).monospacedDigit())
+                    .foregroundStyle(isToday ? accent : mutedInk)
+                    .frame(height: min(14, max(11, scaledDayNumber + 2)))
+                Text(weekdays[index])
+                    .font(.system(size: min(scaledWeekday, 15), weight: .semibold))
                     .foregroundStyle(isToday ? surface : ink)
-                    .frame(minWidth: 24, minHeight: 24)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .frame(minWidth: 32, minHeight: 22)
                     .background {
                         if isToday {
-                            RoundedRectangle(cornerRadius: 7).fill(accent)
+                            RoundedRectangle(cornerRadius: 6).fill(accent)
                         }
                     }
             }
@@ -436,7 +439,7 @@ struct NextBeatWidgetEntryView: View {
 
     private var footerReflection: some View {
         HStack(alignment: .firstTextBaseline, spacing: 7) {
-            Text("自省")
+            Text("今日一问")
                 .font(.system(size: 8, weight: .bold))
                 .tracking(1.1)
                 .foregroundStyle(accent)
@@ -453,7 +456,7 @@ struct NextBeatWidgetEntryView: View {
             Rectangle().fill(rule).frame(height: 0.5)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("底部自省语：\(entry.reflection.footerText)")
+        .accessibilityLabel("今日一问：\(entry.reflection.footerText)")
     }
 
     private func weekView(expanded: Bool) -> some View {
