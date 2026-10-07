@@ -53,7 +53,7 @@ struct ImportView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.teal)
+                .tint(NextBeatPalette.accent)
                 .disabled(json.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
 
                 if let issue {
@@ -67,7 +67,7 @@ struct ImportView: View {
                 if let candidate { preview(candidate) }
                 if saved {
                     Label("已保存；已请求桌面小组件刷新。", systemImage: "checkmark.circle.fill")
-                        .foregroundStyle(.teal)
+                        .foregroundStyle(NextBeatPalette.accent)
                 }
             }
             .padding(20)
@@ -131,7 +131,7 @@ struct ImportView: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.teal)
+            .tint(NextBeatPalette.accent)
         }
         .padding(18)
         .background(Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))

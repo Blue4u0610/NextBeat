@@ -23,6 +23,22 @@ final class PlanCoreTests: XCTestCase {
         }
     }
 
+    func testRejectsAmbiguousFallBackTimeWithDateAndItem() throws {
+        let dates = ["2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29",
+                     "2026-10-30", "2026-10-31", "2026-11-01"]
+        var plan = WeekPlan(weekStart: dates[0], timezone: "America/New_York",
+                            days: dates.map { PlanDay(date: $0, items: []) })
+        plan.days[6].items = [item("01:15", "01:45", "回拨时段")]
+        XCTAssertThrowsError(try PlanValidator.validate(plan)) { error in
+            let message = error.localizedDescription
+            XCTAssertTrue(message.contains("2026-11-01"))
+            XCTAssertTrue(message.contains("第 1 项"))
+            XCTAssertTrue(message.contains("重复出现两次"))
+        }
+        plan.days[6].items = [item("02:15", "03:00", "回拨后")]
+        XCTAssertNoThrow(try PlanValidator.validate(plan))
+    }
+
     func testBoundariesAndGapUseJSONTimezone() throws {
         let plan = fixture(items: [item("09:00", "10:00", "学习"), item("11:00", "12:00", "散步")])
         try PlanValidator.validate(plan)

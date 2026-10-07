@@ -11,7 +11,9 @@
 		194086F541FE1CA8FE5A3EE4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1902B83709A215032A0310 /* ContentView.swift */; };
 		3052C3B1D39F4B6DDEBD8027 /* NextBeatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12E91BED976DF77B7BCED9B /* NextBeatWidget.swift */; };
 		3F6100A4D2783DBDDA6CEF94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E097CF7C9F436CA7378877F7 /* Assets.xcassets */; };
+		5392E1AAFDB6046D7280B139 /* ReflectionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E10C54FEE1CE3AAC7F64199 /* ReflectionSettings.swift */; };
 		61B0670247520B6EAABB4CEF /* NextBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B42D8BE5DA70FD2FF44BEED /* NextBeatApp.swift */; };
+		68940222AB1EBCA1BD608161 /* ReflectionSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71839D0B6EB6173FB4FA0E5 /* ReflectionSettingsView.swift */; };
 		6CAB52D98E645A72419CDC41 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE791260ABC9EAAEDB865A /* WeekView.swift */; };
 		775864032BA2B84517DBBBAB /* PlanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DC49DCA3A4022F70608D0C /* PlanModels.swift */; };
 		898A3737CDBED781D4845BBA /* PlanStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E67580C021A954DED36611 /* PlanStorage.swift */; };
@@ -21,6 +23,7 @@
 		AFA9E4C629D587C08CB7949A /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6BD5F5A7A882F6A46C4E7F /* ImportView.swift */; };
 		D804777A7C9A9C8E3E829CF9 /* NextBeatWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5A677C77A6F73D44A7F35E96 /* NextBeatWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D98C32DF41635ACEB5F200D3 /* PlanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DC49DCA3A4022F70608D0C /* PlanModels.swift */; };
+		E3C6F095D22B89422327DBF0 /* ReflectionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E10C54FEE1CE3AAC7F64199 /* ReflectionSettings.swift */; };
 		E4BD6874A74FEA8678063B89 /* PlanEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC329766BF2392EE41962518 /* PlanEngine.swift */; };
 		FD5E042218850170A1509529 /* PlanStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E67580C021A954DED36611 /* PlanStorage.swift */; };
 /* End PBXBuildFile section */
@@ -65,9 +68,11 @@
 		4ADE791260ABC9EAAEDB865A /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		599DECAF0A24D5A9D2B22BDC /* NextBeatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBeatUITests.swift; sourceTree = "<group>"; };
 		5A677C77A6F73D44A7F35E96 /* NextBeatWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = NextBeatWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E10C54FEE1CE3AAC7F64199 /* ReflectionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionSettings.swift; sourceTree = "<group>"; };
 		6941618E95383B5EBA914042 /* PreviewFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewFixtures.swift; sourceTree = "<group>"; };
 		78080A97D9CE8226AFDAFF0F /* NextBeatUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NextBeatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93DC49DCA3A4022F70608D0C /* PlanModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanModels.swift; sourceTree = "<group>"; };
+		C71839D0B6EB6173FB4FA0E5 /* ReflectionSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionSettingsView.swift; sourceTree = "<group>"; };
 		D12E91BED976DF77B7BCED9B /* NextBeatWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBeatWidget.swift; sourceTree = "<group>"; };
 		E097CF7C9F436CA7378877F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC329766BF2392EE41962518 /* PlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanEngine.swift; sourceTree = "<group>"; };
@@ -102,6 +107,7 @@
 				93DC49DCA3A4022F70608D0C /* PlanModels.swift */,
 				27E67580C021A954DED36611 /* PlanStorage.swift */,
 				6941618E95383B5EBA914042 /* PreviewFixtures.swift */,
+				5E10C54FEE1CE3AAC7F64199 /* ReflectionSettings.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -121,6 +127,7 @@
 				2E1902B83709A215032A0310 /* ContentView.swift */,
 				1D6BD5F5A7A882F6A46C4E7F /* ImportView.swift */,
 				3B42D8BE5DA70FD2FF44BEED /* NextBeatApp.swift */,
+				C71839D0B6EB6173FB4FA0E5 /* ReflectionSettingsView.swift */,
 				4ADE791260ABC9EAAEDB865A /* WeekView.swift */,
 			);
 			path = App;
@@ -255,6 +262,7 @@
 				775864032BA2B84517DBBBAB /* PlanModels.swift in Sources */,
 				898A3737CDBED781D4845BBA /* PlanStorage.swift in Sources */,
 				168F7DB830AF5A2B67ECDE8E /* PreviewFixtures.swift in Sources */,
+				5392E1AAFDB6046D7280B139 /* ReflectionSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +277,8 @@
 				D98C32DF41635ACEB5F200D3 /* PlanModels.swift in Sources */,
 				FD5E042218850170A1509529 /* PlanStorage.swift in Sources */,
 				A9333320BAD33FAD62C4588B /* PreviewFixtures.swift in Sources */,
+				E3C6F095D22B89422327DBF0 /* ReflectionSettings.swift in Sources */,
+				68940222AB1EBCA1BD608161 /* ReflectionSettingsView.swift in Sources */,
 				6CAB52D98E645A72419CDC41 /* WeekView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,10 +16,13 @@ struct NextBeatApp: App {
 @MainActor
 final class NextBeatModel: ObservableObject {
     @Published private(set) var plans: [WeekPlan] = []
+    @Published private(set) var reflectionSettings = ReflectionSettings.defaultValue
     @Published var selectedWeekStart: String?
     @Published var storageIssue: String?
+    @Published var reflectionIssue: String?
 
     private let repository: PlanRepository?
+    private var reflectionRepository: ReflectionRepository?
 
     init(previewPlans: [WeekPlan]? = nil) {
         if let previewPlans {
@@ -35,6 +38,13 @@ final class NextBeatModel: ObservableObject {
             repository = store
             plans = loaded
             selectedWeekStart = PlanEngine.activePlan(in: plans, at: .now)?.weekStart ?? plans.last?.weekStart
+            do {
+                let settingsStore = try ReflectionRepository.appGroup()
+                reflectionRepository = settingsStore
+                reflectionSettings = try settingsStore.load()
+            } catch {
+                reflectionIssue = error.localizedDescription
+            }
         } catch {
             repository = nil
             storageIssue = error.localizedDescription
@@ -63,6 +73,15 @@ final class NextBeatModel: ObservableObject {
         plans = updated
         selectedWeekStart = plan.weekStart
         storageIssue = nil
+        WidgetCenter.shared.reloadTimelines(ofKind: "NextBeatWidget")
+    }
+
+    func saveReflectionSettings(_ proposed: ReflectionSettings) throws {
+        guard let reflectionRepository else {
+            throw PlanIssue(message: reflectionIssue ?? storageIssue ?? "共享存储不可用。请检查 App Group 配置。")
+        }
+        reflectionSettings = try reflectionRepository.save(proposed)
+        reflectionIssue = nil
         WidgetCenter.shared.reloadTimelines(ofKind: "NextBeatWidget")
     }
 

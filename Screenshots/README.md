@@ -1,1 +1,1 @@
-这里保存 iPhone 17 模拟器的真实截图。`nextbeat-home-current.png` 展示当前事项、提示与下一项。
+这里保存 iPhone 17（iOS 27）模拟器的真实截图。`nextbeat-home-current.png` 展示 App 的当前事项、提示与下一项。`nextbeat-timetable-current.png`、`nextbeat-timetable-dark.png`、`nextbeat-timetable-reflection-off.png` 和 `nextbeat-timetable-large-text.png` 展示七列课表组件在每天约 10 项任务时的实际主屏幕效果，包括系统大字体。

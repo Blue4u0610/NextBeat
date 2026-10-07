@@ -1,6 +1,10 @@
 import SwiftUI
 
-private enum NextBeatTab: Hashable { case today, week, importPlan }
+enum NextBeatPalette {
+    static let accent = Color("BrandAccent")
+}
+
+private enum NextBeatTab: Hashable { case today, week, importPlan, settings }
 
 struct ContentView: View {
     @EnvironmentObject private var model: NextBeatModel
@@ -17,10 +21,13 @@ struct ContentView: View {
             NavigationStack { ImportView() }
                 .tabItem { Label("导入", systemImage: "square.and.arrow.down") }
                 .tag(NextBeatTab.importPlan)
+            NavigationStack { ReflectionSettingsView() }
+                .tabItem { Label("设置", systemImage: "gearshape") }
+                .tag(NextBeatTab.settings)
         }
-        .tint(.teal)
+        .tint(NextBeatPalette.accent)
         .overlay(alignment: .top) {
-            if let issue = model.storageIssue {
+            if let issue = model.storageIssue ?? model.reflectionIssue {
                 Text("共享存储错误：\(issue)")
                     .font(.footnote)
                     .foregroundStyle(.white)
@@ -101,7 +108,7 @@ struct DayStatusCard: View {
                 if let current = snapshot.current {
                     Label("正在进行", systemImage: "circle.fill")
                         .font(.caption.weight(.bold))
-                        .foregroundStyle(.teal)
+                        .foregroundStyle(NextBeatPalette.accent)
                     Text(current.item.title)
                         .font(.title2.bold())
                         .fixedSize(horizontal: false, vertical: true)
@@ -114,7 +121,7 @@ struct DayStatusCard: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(12)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(.teal.opacity(0.09), in: RoundedRectangle(cornerRadius: 12))
+                            .background(NextBeatPalette.accent.opacity(0.09), in: RoundedRectangle(cornerRadius: 12))
                     }
                     Divider()
                     if let next = snapshot.next {
@@ -128,7 +135,7 @@ struct DayStatusCard: View {
             case .gap:
                 Label("当前是日程空档", systemImage: "cup.and.saucer")
                     .font(.caption.weight(.bold))
-                    .foregroundStyle(.teal)
+                    .foregroundStyle(NextBeatPalette.accent)
                 if let next = snapshot.next {
                     Text("接下来 · \(next.item.start)")
                         .font(.subheadline.monospacedDigit())
@@ -141,19 +148,19 @@ struct DayStatusCard: View {
             case .done:
                 Label("今日已完成", systemImage: "checkmark.circle.fill")
                     .font(.title2.bold())
-                    .foregroundStyle(.teal)
+                    .foregroundStyle(NextBeatPalette.accent)
                 Text("今天的计划都完成了，休息一下吧。")
                     .foregroundStyle(.secondary)
             case .emptyDay:
                 Label("今天没有安排", systemImage: "leaf")
                     .font(.title2.bold())
-                    .foregroundStyle(.teal)
+                    .foregroundStyle(NextBeatPalette.accent)
                 Text("本周计划已保存，这一天的 items 是空数组。")
                     .foregroundStyle(.secondary)
             case .noPlan:
                 Label("本周还没有计划", systemImage: "calendar.badge.plus")
                     .font(.title2.bold())
-                    .foregroundStyle(.teal)
+                    .foregroundStyle(NextBeatPalette.accent)
                 Text("导入一份完整的七天计划后，桌面小组件也会显示。")
                     .foregroundStyle(.secondary)
             }
@@ -192,14 +199,14 @@ struct TaskRow: View {
             .font(.subheadline.monospacedDigit())
             .frame(width: 48, alignment: .leading)
             Rectangle()
-                .fill(isCurrent ? Color.teal : Color.gray.opacity(0.35))
+                .fill(isCurrent ? NextBeatPalette.accent : Color.gray.opacity(0.35))
                 .frame(width: 3)
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text(item.title)
                         .font(.body.weight(isCurrent ? .semibold : .regular))
                         .fixedSize(horizontal: false, vertical: true)
-                    if isCurrent { Image(systemName: "circle.fill").font(.caption2).foregroundStyle(.teal) }
+                    if isCurrent { Image(systemName: "circle.fill").font(.caption2).foregroundStyle(NextBeatPalette.accent) }
                 }
                 if !item.tip.isEmpty {
                     Text(item.tip)
@@ -213,7 +220,7 @@ struct TaskRow: View {
         .foregroundStyle(isPast ? Color.secondary : Color.primary)
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(isCurrent ? Color.teal.opacity(0.10) : Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 15))
+        .background(isCurrent ? NextBeatPalette.accent.opacity(0.10) : Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 15))
         .accessibilityElement(children: .combine)
     }
 }

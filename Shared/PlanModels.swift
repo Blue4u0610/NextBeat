@@ -100,6 +100,12 @@ enum PlanValidator {
                 guard start.minutes >= previousEnd else {
                     throw PlanIssue(message: "\(label)：与上一项重叠。")
                 }
+                if isAmbiguousLocalTime(day: expectedDate, time: start, calendar: calendar) {
+                    throw PlanIssue(message: "\(label)：start“\(item.start)”在当地时区 \(plan.timezone) 因夏令时回拨重复出现两次，无法确定是哪一次。")
+                }
+                if isAmbiguousLocalTime(day: expectedDate, time: end, calendar: calendar) {
+                    throw PlanIssue(message: "\(label)：end“\(item.end)”在当地时区 \(plan.timezone) 因夏令时回拨重复出现两次，无法确定是哪一次。")
+                }
                 guard makeDate(day: expectedDate, time: start, calendar: calendar) != nil,
                       makeDate(day: expectedDate, time: end, calendar: calendar) != nil else {
                     throw PlanIssue(message: "\(label)：当地时区 \(plan.timezone) 在该日期不存在此时间（夏令时跳时）。")
@@ -160,6 +166,21 @@ enum PlanValidator {
         guard roundTrip.year == dateParts.year, roundTrip.month == dateParts.month,
               roundTrip.day == dateParts.day, roundTrip.hour == hour, roundTrip.minute == minute else { return nil }
         return result
+    }
+
+    private static func isAmbiguousLocalTime(day: Date, time: ClockTime, calendar: Calendar) -> Bool {
+        guard time.minutes < 1440 else { return false }
+        let components = DateComponents(hour: time.minutes / 60, minute: time.minutes % 60)
+        let searchStart = calendar.startOfDay(for: day).addingTimeInterval(-1)
+        guard let first = calendar.nextDate(after: searchStart, matching: components,
+                                            matchingPolicy: .strict, repeatedTimePolicy: .first),
+              let last = calendar.nextDate(after: searchStart, matching: components,
+                                           matchingPolicy: .strict, repeatedTimePolicy: .last) else {
+            return false
+        }
+        let expected = dateString(day, calendar: calendar)
+        return first != last && dateString(first, calendar: calendar) == expected
+            && dateString(last, calendar: calendar) == expected
     }
 
     private static func describeDecodingError(_ error: Error, json: Data) -> String {

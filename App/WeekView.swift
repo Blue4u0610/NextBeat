@@ -99,7 +99,7 @@ struct WeekView: View {
                         .frame(minWidth: 48)
                         .padding(.vertical, 10)
                         .padding(.horizontal, 4)
-                        .background(selectedDay == day.date ? Color.teal : Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12))
+                        .background(selectedDay == day.date ? NextBeatPalette.accent : Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12))
                         .foregroundStyle(selectedDay == day.date ? Color.white : Color.primary)
                     }
                     .buttonStyle(.plain)
@@ -123,7 +123,7 @@ struct WeekView: View {
                     Label("添加事项", systemImage: "plus")
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.teal)
+                .tint(NextBeatPalette.accent)
             }
             if day.items.isEmpty {
                 Text("这一天没有安排")
