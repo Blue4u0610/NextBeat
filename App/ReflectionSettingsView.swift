@@ -26,11 +26,29 @@ struct ReflectionSettingsView: View {
             Section {
                 Toggle("显示底部自省语", isOn: $draft.footerEnabled)
                     .tint(NextBeatPalette.accent)
+                HStack {
+                    Text("栏标题")
+                    TextField("输入标题", text: $draft.footerTitle)
+                        .multilineTextAlignment(.trailing)
+                        .textInputAutocapitalization(.never)
+                        .submitLabel(.done)
+                        .accessibilityLabel("底部栏标题")
+                    if !draft.footerTitle.isEmpty {
+                        Button {
+                            draft.footerTitle = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.tertiary)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("清空底部栏标题")
+                    }
+                }
                 TextField("写一句留给自己的问题", text: $draft.footerText, axis: .vertical)
                     .lineLimit(2...4)
                     .textInputAutocapitalization(.never)
                     .accessibilityLabel("底部自省语内容")
-                Text("显示在任务提醒下方，可单独关闭；文字会保留。")
+                Text("标题最多 8 字；这一栏显示在任务提醒下方，可单独关闭。")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             } header: {
@@ -82,7 +100,7 @@ struct ReflectionSettingsView: View {
     }
 }
 
-#Preview("自省语设置") {
+#Preview("组件文字设置") {
     NavigationStack { ReflectionSettingsView() }
         .environmentObject(NextBeatModel(previewPlans: [PreviewFixtures.week]))
 }

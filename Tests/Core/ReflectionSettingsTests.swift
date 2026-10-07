@@ -11,11 +11,13 @@ final class ReflectionSettingsTests: XCTestCase {
         XCTAssertEqual(try repository.load(), .defaultValue)
         let saved = try repository.save(ReflectionSettings(
             isEnabled: false, text: "  慢一点，想清楚再行动。  ",
-            footerEnabled: false, footerText: "  今天留下了什么？  "
+            footerEnabled: false, footerTitle: "  片刻自问  ",
+            footerText: "  今天留下了什么？  "
         ))
         XCTAssertEqual(saved, ReflectionSettings(
             isEnabled: false, text: "慢一点，想清楚再行动。",
-            footerEnabled: false, footerText: "今天留下了什么？"
+            footerEnabled: false, footerTitle: "片刻自问",
+            footerText: "今天留下了什么？"
         ))
         XCTAssertEqual(try repository.load(), saved)
     }
@@ -33,13 +35,29 @@ final class ReflectionSettingsTests: XCTestCase {
         XCTAssertFalse(settings.isEnabled)
         XCTAssertEqual(settings.text, "记住重要的事。")
         XCTAssertTrue(settings.footerEnabled)
+        XCTAssertEqual(settings.footerTitle, ReflectionSettings.defaultFooterTitle)
         XCTAssertEqual(settings.footerText, ReflectionSettings.defaultFooterText)
 
         try repository.save(settings)
         let saved = try JSONSerialization.jsonObject(with: Data(contentsOf: fileURL)) as? [String: Any]
         let savedSettings = saved?["settings"] as? [String: Any]
         XCTAssertEqual(savedSettings?["footerEnabled"] as? Bool, true)
+        XCTAssertEqual(savedSettings?["footerTitle"] as? String, ReflectionSettings.defaultFooterTitle)
         XCTAssertEqual(savedSettings?["footerText"] as? String, ReflectionSettings.defaultFooterText)
+    }
+
+    func testExistingFooterWithoutTitleKeepsTextAndGetsDefaultTitle() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let fileURL = directory.appendingPathComponent("reflection-v1.json")
+        let previous = #"{"version":1,"settings":{"isEnabled":true,"text":"看见当下。","footerEnabled":false,"footerText":"今日所学是什么？"}}"#
+        try Data(previous.utf8).write(to: fileURL)
+
+        let settings = try ReflectionRepository(fileURL: fileURL).load()
+        XCTAssertEqual(settings.footerTitle, ReflectionSettings.defaultFooterTitle)
+        XCTAssertFalse(settings.footerEnabled)
+        XCTAssertEqual(settings.footerText, "今日所学是什么？")
     }
 
     func testInvalidChangePreservesExistingSettings() throws {
@@ -57,6 +75,15 @@ final class ReflectionSettingsTests: XCTestCase {
         XCTAssertThrowsError(try repository.save(ReflectionSettings(
             isEnabled: true, text: original.text,
             footerText: String(repeating: "思", count: 101)
+        )))
+        XCTAssertThrowsError(try repository.save(ReflectionSettings(
+            isEnabled: true, text: original.text, footerTitle: "  \n "
+        )))
+        XCTAssertThrowsError(try repository.save(ReflectionSettings(
+            isEnabled: true, text: original.text, footerTitle: "第一行\n第二行"
+        )))
+        XCTAssertThrowsError(try repository.save(ReflectionSettings(
+            isEnabled: true, text: original.text, footerTitle: "超过八个汉字的标题文字"
         )))
         XCTAssertEqual(try Data(contentsOf: repository.fileURL), originalData)
         XCTAssertEqual(try repository.load(), original)

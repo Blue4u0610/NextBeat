@@ -439,7 +439,7 @@ struct NextBeatWidgetEntryView: View {
 
     private var footerReflection: some View {
         HStack(alignment: .firstTextBaseline, spacing: 7) {
-            Text("今日一问")
+            Text(entry.reflection.footerTitle)
                 .font(.system(size: 8, weight: .bold))
                 .tracking(1.1)
                 .foregroundStyle(accent)
@@ -456,7 +456,7 @@ struct NextBeatWidgetEntryView: View {
             Rectangle().fill(rule).frame(height: 0.5)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("今日一问：\(entry.reflection.footerText)")
+        .accessibilityLabel("\(entry.reflection.footerTitle)：\(entry.reflection.footerText)")
     }
 
     private func weekView(expanded: Bool) -> some View {
@@ -895,6 +895,20 @@ private func previewEntry(_ hour: Int, _ minute: Int, day: Int = 5,
                                     text: ReflectionSettings.defaultValue.text,
                                     footerEnabled: false,
                                     footerText: ReflectionSettings.defaultFooterText)),
+            familyOverride: .systemExtraLargePortrait
+        )
+        .frame(width: 350, height: 565)
+    }
+}
+
+#Preview("纵向超大 · 自定义底部标题") {
+    if #available(iOS 27.0, *) {
+        NextBeatWidgetEntryView(
+            entry: previewEntry(9, 45, day: 7, plans: [PreviewFixtures.denseWeek],
+                                reflection: ReflectionSettings(
+                                    isEnabled: true,
+                                    text: ReflectionSettings.defaultValue.text,
+                                    footerTitle: "片刻自问")),
             familyOverride: .systemExtraLargePortrait
         )
         .frame(width: 350, height: 565)

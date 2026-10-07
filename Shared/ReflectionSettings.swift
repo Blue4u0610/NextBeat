@@ -4,29 +4,35 @@ struct ReflectionSettings: Codable, Equatable {
     var isEnabled: Bool
     var text: String
     var footerEnabled: Bool
+    var footerTitle: String
     var footerText: String
 
+    static let defaultFooterTitle = "今日一问"
     static let defaultFooterText = "今天最值得坚持的一件事是什么？"
 
     init(isEnabled: Bool, text: String,
-         footerEnabled: Bool = true, footerText: String = defaultFooterText) {
+         footerEnabled: Bool = true, footerTitle: String = defaultFooterTitle,
+         footerText: String = defaultFooterText) {
         self.isEnabled = isEnabled
         self.text = text
         self.footerEnabled = footerEnabled
+        self.footerTitle = footerTitle
         self.footerText = footerText
     }
 
     private enum CodingKeys: String, CodingKey {
-        case isEnabled, text, footerEnabled, footerText
+        case isEnabled, text, footerEnabled, footerTitle, footerText
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         isEnabled = try values.decode(Bool.self, forKey: .isEnabled)
         text = try values.decode(String.self, forKey: .text)
-        // Older reflection-v1.json files contain only the top reflection.
+        // Older reflection-v1.json files may lack the footer or its editable title.
         footerEnabled = values.contains(.footerEnabled)
             ? try values.decode(Bool.self, forKey: .footerEnabled) : true
+        footerTitle = values.contains(.footerTitle)
+            ? try values.decode(String.self, forKey: .footerTitle) : Self.defaultFooterTitle
         footerText = values.contains(.footerText)
             ? try values.decode(String.self, forKey: .footerText) : Self.defaultFooterText
     }
@@ -38,12 +44,22 @@ struct ReflectionSettings: Codable, Equatable {
 
     func validated() throws -> ReflectionSettings {
         let top = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let bottomTitle = footerTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         let bottom = footerText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !top.isEmpty else {
             throw PlanIssue(message: "顶部自省语不能为空。若暂时不想显示，请关闭顶部开关。")
         }
         guard top.count <= 100 else {
             throw PlanIssue(message: "顶部自省语最多 100 字，当前为 \(top.count) 字。")
+        }
+        guard !bottomTitle.isEmpty else {
+            throw PlanIssue(message: "底部栏标题不能为空。若暂时不想显示，请关闭底部开关。")
+        }
+        guard bottomTitle.rangeOfCharacter(from: .newlines) == nil else {
+            throw PlanIssue(message: "底部栏标题只能写一行。")
+        }
+        guard bottomTitle.count <= 8 else {
+            throw PlanIssue(message: "底部栏标题最多 8 字，当前为 \(bottomTitle.count) 字。")
         }
         guard !bottom.isEmpty else {
             throw PlanIssue(message: "底部自省语不能为空。若暂时不想显示，请关闭底部开关。")
@@ -52,7 +68,8 @@ struct ReflectionSettings: Codable, Equatable {
             throw PlanIssue(message: "底部自省语最多 100 字，当前为 \(bottom.count) 字。")
         }
         return ReflectionSettings(isEnabled: isEnabled, text: top,
-                                  footerEnabled: footerEnabled, footerText: bottom)
+                                  footerEnabled: footerEnabled, footerTitle: bottomTitle,
+                                  footerText: bottom)
     }
 }
 

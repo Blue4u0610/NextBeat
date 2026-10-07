@@ -1,6 +1,32 @@
 import XCTest
 
 final class NextBeatUITests: XCTestCase {
+    func testFooterTitleCanBeEditedAndPersists() {
+        let app = XCUIApplication()
+        app.launch()
+        app.tabBars.buttons["设置"].tap()
+        let title = app.textFields["底部栏标题"]
+        XCTAssertTrue(title.waitForExistence(timeout: 10))
+
+        func replaceTitle(with replacement: String) {
+            app.buttons["清空底部栏标题"].tap()
+            let field = app.textFields["底部栏标题"]
+            field.tap()
+            field.typeText(replacement + "\n")
+            XCTAssertEqual(field.value as? String, replacement)
+            app.buttons["保存并更新小组件"].tap()
+        }
+
+        replaceTitle(with: "片刻自问")
+        app.terminate()
+        app.launch()
+        app.tabBars.buttons["设置"].tap()
+        XCTAssertEqual(app.textFields["底部栏标题"].value as? String, "片刻自问")
+
+        replaceTitle(with: "今日一问")
+        XCTAssertEqual(app.textFields["底部栏标题"].value as? String, "今日一问")
+    }
+
     func testFooterReflectionCanBeDisabledAndRestored() {
         let app = XCUIApplication()
         app.launch()
