@@ -1,0 +1,575 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		168F7DB830AF5A2B67ECDE8E /* PreviewFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6941618E95383B5EBA914042 /* PreviewFixtures.swift */; };
+		194086F541FE1CA8FE5A3EE4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1902B83709A215032A0310 /* ContentView.swift */; };
+		3052C3B1D39F4B6DDEBD8027 /* NextBeatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12E91BED976DF77B7BCED9B /* NextBeatWidget.swift */; };
+		3F6100A4D2783DBDDA6CEF94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E097CF7C9F436CA7378877F7 /* Assets.xcassets */; };
+		61B0670247520B6EAABB4CEF /* NextBeatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B42D8BE5DA70FD2FF44BEED /* NextBeatApp.swift */; };
+		6CAB52D98E645A72419CDC41 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE791260ABC9EAAEDB865A /* WeekView.swift */; };
+		775864032BA2B84517DBBBAB /* PlanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DC49DCA3A4022F70608D0C /* PlanModels.swift */; };
+		898A3737CDBED781D4845BBA /* PlanStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E67580C021A954DED36611 /* PlanStorage.swift */; };
+		8AA92000C6F10824FBA583CB /* PlanEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC329766BF2392EE41962518 /* PlanEngine.swift */; };
+		9C97E8EEDD8C3DEF6C6E7C24 /* NextBeatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599DECAF0A24D5A9D2B22BDC /* NextBeatUITests.swift */; };
+		A9333320BAD33FAD62C4588B /* PreviewFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6941618E95383B5EBA914042 /* PreviewFixtures.swift */; };
+		AFA9E4C629D587C08CB7949A /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6BD5F5A7A882F6A46C4E7F /* ImportView.swift */; };
+		D804777A7C9A9C8E3E829CF9 /* NextBeatWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5A677C77A6F73D44A7F35E96 /* NextBeatWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D98C32DF41635ACEB5F200D3 /* PlanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DC49DCA3A4022F70608D0C /* PlanModels.swift */; };
+		E4BD6874A74FEA8678063B89 /* PlanEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC329766BF2392EE41962518 /* PlanEngine.swift */; };
+		FD5E042218850170A1509529 /* PlanStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E67580C021A954DED36611 /* PlanStorage.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		24C66C4B9665AB99003D8E5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6B8BBBFF32A1700AFA5D383 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 974840DBE019BB8EA56F76D5;
+			remoteInfo = NextBeat;
+		};
+		4D98D8161F8B7347256F75D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6B8BBBFF32A1700AFA5D383 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1E8429BA7720BE06A79B5142;
+			remoteInfo = NextBeatWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		71F3CAC5619ABFCED0DFB14D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D804777A7C9A9C8E3E829CF9 /* NextBeatWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1D6BD5F5A7A882F6A46C4E7F /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
+		27E67580C021A954DED36611 /* PlanStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanStorage.swift; sourceTree = "<group>"; };
+		2E1902B83709A215032A0310 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3B42D8BE5DA70FD2FF44BEED /* NextBeatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBeatApp.swift; sourceTree = "<group>"; };
+		3FAA8B66658658A02001FF9F /* NextBeat.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NextBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ADE791260ABC9EAAEDB865A /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		599DECAF0A24D5A9D2B22BDC /* NextBeatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBeatUITests.swift; sourceTree = "<group>"; };
+		5A677C77A6F73D44A7F35E96 /* NextBeatWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = NextBeatWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6941618E95383B5EBA914042 /* PreviewFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewFixtures.swift; sourceTree = "<group>"; };
+		78080A97D9CE8226AFDAFF0F /* NextBeatUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NextBeatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		93DC49DCA3A4022F70608D0C /* PlanModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanModels.swift; sourceTree = "<group>"; };
+		D12E91BED976DF77B7BCED9B /* NextBeatWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBeatWidget.swift; sourceTree = "<group>"; };
+		E097CF7C9F436CA7378877F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FC329766BF2392EE41962518 /* PlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanEngine.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0FA6639E413BB63FD6B6311F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8B66658658A02001FF9F /* NextBeat.app */,
+				78080A97D9CE8226AFDAFF0F /* NextBeatUITests.xctest */,
+				5A677C77A6F73D44A7F35E96 /* NextBeatWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2208FA3C1A8F87338AAB44A2 = {
+			isa = PBXGroup;
+			children = (
+				96CF9E74134C4B5509B62CC2 /* App */,
+				36C4C6FF1386CE4198301419 /* Shared */,
+				9A43EA2D3F84C440A139DC92 /* UITests */,
+				8967D8F2C635A7296B54065E /* Widget */,
+				0FA6639E413BB63FD6B6311F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		36C4C6FF1386CE4198301419 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				FC329766BF2392EE41962518 /* PlanEngine.swift */,
+				93DC49DCA3A4022F70608D0C /* PlanModels.swift */,
+				27E67580C021A954DED36611 /* PlanStorage.swift */,
+				6941618E95383B5EBA914042 /* PreviewFixtures.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		8967D8F2C635A7296B54065E /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				D12E91BED976DF77B7BCED9B /* NextBeatWidget.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		96CF9E74134C4B5509B62CC2 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E097CF7C9F436CA7378877F7 /* Assets.xcassets */,
+				2E1902B83709A215032A0310 /* ContentView.swift */,
+				1D6BD5F5A7A882F6A46C4E7F /* ImportView.swift */,
+				3B42D8BE5DA70FD2FF44BEED /* NextBeatApp.swift */,
+				4ADE791260ABC9EAAEDB865A /* WeekView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		9A43EA2D3F84C440A139DC92 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				599DECAF0A24D5A9D2B22BDC /* NextBeatUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1E8429BA7720BE06A79B5142 /* NextBeatWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01D354AB6E62B1052B81A31 /* Build configuration list for PBXNativeTarget "NextBeatWidget" */;
+			buildPhases = (
+				0F4954A159A9DE1E4A507509 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NextBeatWidget;
+			packageProductDependencies = (
+			);
+			productName = NextBeatWidget;
+			productReference = 5A677C77A6F73D44A7F35E96 /* NextBeatWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		91A195EE6B736A3A22BE6863 /* NextBeatUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8410E7305BE43895A714F92 /* Build configuration list for PBXNativeTarget "NextBeatUITests" */;
+			buildPhases = (
+				FED12AD5F975211EC2C5DDF6 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				32939584F24A74D30AED0BBB /* PBXTargetDependency */,
+			);
+			name = NextBeatUITests;
+			packageProductDependencies = (
+			);
+			productName = NextBeatUITests;
+			productReference = 78080A97D9CE8226AFDAFF0F /* NextBeatUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		974840DBE019BB8EA56F76D5 /* NextBeat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04298EF8E0B5CA3B47C1D071 /* Build configuration list for PBXNativeTarget "NextBeat" */;
+			buildPhases = (
+				85FDB5E73D76EE4DEC59BB20 /* Sources */,
+				9882522FD5E0B58DAE81D3B1 /* Resources */,
+				71F3CAC5619ABFCED0DFB14D /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				13CBA45E14673924AAECFD04 /* PBXTargetDependency */,
+			);
+			name = NextBeat;
+			packageProductDependencies = (
+			);
+			productName = NextBeat;
+			productReference = 3FAA8B66658658A02001FF9F /* NextBeat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C6B8BBBFF32A1700AFA5D383 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					1E8429BA7720BE06A79B5142 = {
+						ProvisioningStyle = Automatic;
+					};
+					91A195EE6B736A3A22BE6863 = {
+						ProvisioningStyle = Automatic;
+						TestTargetID = 974840DBE019BB8EA56F76D5;
+					};
+					974840DBE019BB8EA56F76D5 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F9E53113CF07E75AFE9A91E6 /* Build configuration list for PBXProject "NextBeat" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 2208FA3C1A8F87338AAB44A2;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 0FA6639E413BB63FD6B6311F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				974840DBE019BB8EA56F76D5 /* NextBeat */,
+				1E8429BA7720BE06A79B5142 /* NextBeatWidget */,
+				91A195EE6B736A3A22BE6863 /* NextBeatUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9882522FD5E0B58DAE81D3B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F6100A4D2783DBDDA6CEF94 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0F4954A159A9DE1E4A507509 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3052C3B1D39F4B6DDEBD8027 /* NextBeatWidget.swift in Sources */,
+				8AA92000C6F10824FBA583CB /* PlanEngine.swift in Sources */,
+				775864032BA2B84517DBBBAB /* PlanModels.swift in Sources */,
+				898A3737CDBED781D4845BBA /* PlanStorage.swift in Sources */,
+				168F7DB830AF5A2B67ECDE8E /* PreviewFixtures.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		85FDB5E73D76EE4DEC59BB20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				194086F541FE1CA8FE5A3EE4 /* ContentView.swift in Sources */,
+				AFA9E4C629D587C08CB7949A /* ImportView.swift in Sources */,
+				61B0670247520B6EAABB4CEF /* NextBeatApp.swift in Sources */,
+				E4BD6874A74FEA8678063B89 /* PlanEngine.swift in Sources */,
+				D98C32DF41635ACEB5F200D3 /* PlanModels.swift in Sources */,
+				FD5E042218850170A1509529 /* PlanStorage.swift in Sources */,
+				A9333320BAD33FAD62C4588B /* PreviewFixtures.swift in Sources */,
+				6CAB52D98E645A72419CDC41 /* WeekView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FED12AD5F975211EC2C5DDF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C97E8EEDD8C3DEF6C6E7C24 /* NextBeatUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		13CBA45E14673924AAECFD04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1E8429BA7720BE06A79B5142 /* NextBeatWidget */;
+			targetProxy = 4D98D8161F8B7347256F75D2 /* PBXContainerItemProxy */;
+		};
+		32939584F24A74D30AED0BBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 974840DBE019BB8EA56F76D5 /* NextBeat */;
+			targetProxy = 24C66C4B9665AB99003D8E5C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0EE871E316351D6F78E8AA4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Widget/NextBeatWidget.entitlements;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "NextBeat Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		33AFC5E57FB0BE5EB4706D91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_IDENTIFIER = group.com.example.nextbeat;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		65621937057811B8AFD33226 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/NextBeat.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NextBeat;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		73E514D2F37C6C164CA3FC66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/NextBeat.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NextBeat;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7DD09D43AB243680C76F8A27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Widget/NextBeatWidget.entitlements;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "NextBeat Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		863A4FDC4E5AACDF403B6EB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NextBeat;
+			};
+			name = Debug;
+		};
+		B06FBE9B9A2E8062CEB18619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_IDENTIFIER = group.com.example.nextbeat;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		B15158597E733BCC55A93E10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.nextbeat.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NextBeat;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04298EF8E0B5CA3B47C1D071 /* Build configuration list for PBXNativeTarget "NextBeat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65621937057811B8AFD33226 /* Debug */,
+				73E514D2F37C6C164CA3FC66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C01D354AB6E62B1052B81A31 /* Build configuration list for PBXNativeTarget "NextBeatWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DD09D43AB243680C76F8A27 /* Debug */,
+				0EE871E316351D6F78E8AA4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F8410E7305BE43895A714F92 /* Build configuration list for PBXNativeTarget "NextBeatUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				863A4FDC4E5AACDF403B6EB7 /* Debug */,
+				B15158597E733BCC55A93E10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F9E53113CF07E75AFE9A91E6 /* Build configuration list for PBXProject "NextBeat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33AFC5E57FB0BE5EB4706D91 /* Debug */,
+				B06FBE9B9A2E8062CEB18619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C6B8BBBFF32A1700AFA5D383 /* Project object */;
+}

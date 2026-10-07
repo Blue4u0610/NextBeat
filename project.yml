@@ -1,0 +1,95 @@
+name: NextBeat
+options:
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    CODE_SIGN_STYLE: Automatic
+    APP_GROUP_IDENTIFIER: group.com.example.nextbeat
+targets:
+  NextBeat:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+        excludes:
+          - Info.plist
+          - NextBeat.entitlements
+      - path: Shared
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: NextBeat
+        NextBeatAppGroup: $(APP_GROUP_IDENTIFIER)
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        CFBundleURLTypes:
+          - CFBundleURLName: NextBeat
+            CFBundleURLSchemes:
+              - nextbeat
+    entitlements:
+      path: App/NextBeat.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP_IDENTIFIER)
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.nextbeat
+        INFOPLIST_KEY_CFBundleDisplayName: NextBeat
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - target: NextBeatWidget
+        embed: true
+  NextBeatWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+        excludes:
+          - Info.plist
+          - NextBeatWidget.entitlements
+      - path: Shared
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: NextBeat Widget
+        NextBeatAppGroup: $(APP_GROUP_IDENTIFIER)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widget/NextBeatWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP_IDENTIFIER)
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.nextbeat.widget
+        INFOPLIST_KEY_CFBundleDisplayName: NextBeat Widget
+        SKIP_INSTALL: YES
+        APPLICATION_EXTENSION_API_ONLY: YES
+  NextBeatUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: UITests
+    dependencies:
+      - target: NextBeat
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.nextbeat.uitests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  NextBeat:
+    build:
+      targets:
+        NextBeat: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - NextBeatUITests
