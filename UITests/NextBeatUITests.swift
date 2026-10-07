@@ -1,11 +1,32 @@
 import XCTest
 
 final class NextBeatUITests: XCTestCase {
+    func testFooterReflectionCanBeDisabledAndRestored() {
+        let app = XCUIApplication()
+        app.launch()
+        app.tabBars.buttons["设置"].tap()
+        let toggle = app.switches["显示底部自省语"]
+        XCTAssertTrue(toggle.waitForExistence(timeout: 10))
+        if (toggle.value as? String) != "0" {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+            app.buttons["保存并更新小组件"].tap()
+        }
+        app.terminate()
+        app.launch()
+        app.tabBars.buttons["设置"].tap()
+        XCTAssertEqual(app.switches["显示底部自省语"].value as? String, "0")
+
+        app.switches["显示底部自省语"]
+            .coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+        app.buttons["保存并更新小组件"].tap()
+        XCTAssertEqual(app.switches["显示底部自省语"].value as? String, "1")
+    }
+
     func testReflectionCanBeDisabledAndPersists() {
         let app = XCUIApplication()
         app.launch()
         app.tabBars.buttons["设置"].tap()
-        let toggle = app.switches["显示自省语"]
+        let toggle = app.switches["显示顶部自省语"]
         XCTAssertTrue(toggle.waitForExistence(timeout: 10))
         if (toggle.value as? String) != "0" {
             toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
@@ -17,14 +38,14 @@ final class NextBeatUITests: XCTestCase {
         app.terminate()
         app.launch()
         app.tabBars.buttons["设置"].tap()
-        XCTAssertEqual(app.switches["显示自省语"].value as? String, "0")
+        XCTAssertEqual(app.switches["显示顶部自省语"].value as? String, "0")
     }
 
     func testReflectionCanBeEnabledAndPersists() {
         let app = XCUIApplication()
         app.launch()
         app.tabBars.buttons["设置"].tap()
-        let toggle = app.switches["显示自省语"]
+        let toggle = app.switches["显示顶部自省语"]
         XCTAssertTrue(toggle.waitForExistence(timeout: 10))
         if (toggle.value as? String) != "1" {
             toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
@@ -36,7 +57,7 @@ final class NextBeatUITests: XCTestCase {
         app.terminate()
         app.launch()
         app.tabBars.buttons["设置"].tap()
-        XCTAssertEqual(app.switches["显示自省语"].value as? String, "1")
+        XCTAssertEqual(app.switches["显示顶部自省语"].value as? String, "1")
     }
 
     func testImportEditAndPersistence() throws {

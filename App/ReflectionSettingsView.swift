@@ -10,17 +10,31 @@ struct ReflectionSettingsView: View {
     var body: some View {
         Form {
             Section {
-                Toggle("显示自省语", isOn: $draft.isEnabled)
+                Toggle("显示顶部自省语", isOn: $draft.isEnabled)
                     .tint(NextBeatPalette.accent)
-                TextField("写一句给自己的话", text: $draft.text, axis: .vertical)
+                TextField("写一句此刻想对自己说的话", text: $draft.text, axis: .vertical)
                     .lineLimit(2...4)
                     .textInputAutocapitalization(.never)
-                    .accessibilityLabel("自省语内容")
-                Text("显示在纵向超大组件顶部。关闭后仍会保留文字，随时可以重新开启。")
+                    .accessibilityLabel("顶部自省语内容")
+                Text("显示在纵向超大组件顶部。关闭后会保留文字。")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             } header: {
-                Text("桌面大组件")
+                Text("组件顶部")
+            }
+
+            Section {
+                Toggle("显示底部自省语", isOn: $draft.footerEnabled)
+                    .tint(NextBeatPalette.accent)
+                TextField("写一句留给自己的问题", text: $draft.footerText, axis: .vertical)
+                    .lineLimit(2...4)
+                    .textInputAutocapitalization(.never)
+                    .accessibilityLabel("底部自省语内容")
+                Text("显示在任务提醒下方，可单独关闭；文字会保留。")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            } header: {
+                Text("组件底部")
             }
 
             Section {

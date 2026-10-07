@@ -81,16 +81,17 @@ struct NextBeatWidgetEntryView: View {
     @Environment(\.widgetFamily) private var environmentFamily
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.colorScheme) private var colorScheme
-    @ScaledMetric(relativeTo: .caption2) private var scaledGridTime: CGFloat = 9
-    @ScaledMetric(relativeTo: .caption) private var scaledGridTitle: CGFloat = 10
-    @ScaledMetric(relativeTo: .caption2) private var scaledWeekday: CGFloat = 11
-    @ScaledMetric(relativeTo: .caption2) private var scaledDayNumber: CGFloat = 9
+    @ScaledMetric(relativeTo: .caption2) private var scaledGridTime: CGFloat = 7.8
+    @ScaledMetric(relativeTo: .caption) private var scaledGridTitle: CGFloat = 9.3
+    @ScaledMetric(relativeTo: .caption2) private var scaledWeekday: CGFloat = 9
+    @ScaledMetric(relativeTo: .caption2) private var scaledDayNumber: CGFloat = 16
     @ScaledMetric(relativeTo: .caption2) private var scaledQuoteHeight: CGFloat = 22
     @ScaledMetric(relativeTo: .caption) private var scaledHeadingHeight: CGFloat = 25
     @ScaledMetric(relativeTo: .body) private var scaledFocusHeight: CGFloat = 96
 
-    // Seven columns leave only about 45 pt per cell. Keep HH:mm legible at large type.
-    private var gridTimeSize: CGFloat { min(scaledGridTime, 12) }
+    // Seven columns leave only about 45 pt per cell. Stack the two times rather than shrinking a range.
+    private var gridTimeSize: CGFloat { min(scaledGridTime, 9) }
+    private var gridEndTimeSize: CGFloat { max(7, gridTimeSize - 0.5) }
     private var gridTitleSize: CGFloat { min(scaledGridTitle, 15) }
 
     private var paper: Color {
@@ -124,6 +125,25 @@ struct NextBeatWidgetEntryView: View {
         }
     }
 
+    private func dateParts(_ date: String) -> (year: Int, month: Int, day: Int)? {
+        let numbers = date.split(separator: "-").compactMap { Int($0) }
+        guard numbers.count == 3 else { return nil }
+        return (numbers[0], numbers[1], numbers[2])
+    }
+
+    private func weekYear(_ week: WeekPlan) -> String {
+        guard let first = dateParts(week.weekStart), let last = dateParts(week.days[6].date) else { return "" }
+        return first.year == last.year ? "\(first.year)" : "\(first.year) / \(last.year)"
+    }
+
+    private func weekMonth(_ week: WeekPlan) -> String {
+        guard let first = dateParts(week.weekStart), let last = dateParts(week.days[6].date) else { return "" }
+        if first.year == last.year && first.month == last.month {
+            return "\(first.month)月"
+        }
+        return "\(first.month)月 / \(last.month)月"
+    }
+
     var body: some View {
         let family = familyOverride ?? environmentFamily
         Group {
@@ -145,14 +165,18 @@ struct NextBeatWidgetEntryView: View {
         GeometryReader { geometry in
             let showsReflection = entry.reflection.isEnabled && !entry.reflection.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             let quoteHeight: CGFloat = showsReflection ? min(36, max(22, scaledQuoteHeight)) : 0
-            let headingHeight = min(43, max(25, scaledHeadingHeight))
-            let footerHeight = min(210, max(96, scaledFocusHeight))
-            let dayHeaderHeight = min(42, max(26, min(scaledWeekday, 16) + min(scaledDayNumber, 14) + 6))
-            let gridBudget = max(150, geometry.size.height - quoteHeight - headingHeight - footerHeight - 24 - 10)
-            let nominalCellHeight = min(62, max(29, gridTimeSize + gridTitleSize + 9))
-            let visibleSlots = max(1, min(13, Int((gridBudget - dayHeaderHeight) / nominalCellHeight)))
-            let cellHeight = min(nominalCellHeight + 3,
-                                 max(nominalCellHeight, (gridBudget - dayHeaderHeight) / CGFloat(visibleSlots)))
+            let headingHeight = min(47, max(34, scaledHeadingHeight))
+            let needsMoreFocusHeight = focusedTask.map { $0.item.title.count > 17 || $0.item.tip.count > 24 } ?? false
+            let footerHeight = min(180, max(needsMoreFocusHeight ? 104 : 84, scaledFocusHeight - 12))
+            let showsFooterReflection = entry.reflection.footerEnabled &&
+                !entry.reflection.footerText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            let footerReflectionHeight: CGFloat = showsFooterReflection ? 27 : 0
+            let dayHeaderHeight = min(50, max(38, min(scaledWeekday, 15) + min(scaledDayNumber, 21) + 8))
+            let gridBudget = max(150, geometry.size.height - quoteHeight - headingHeight - footerHeight - footerReflectionHeight - 24 - 10)
+            let nominalCellHeight = min(65, max(32, gridTimeSize + gridEndTimeSize + gridTitleSize + 5))
+            let visibleSlots = max(1, min(10, Int((gridBudget - dayHeaderHeight) / nominalCellHeight)))
+            let cellHeight = min(45, max(nominalCellHeight,
+                                         (gridBudget - dayHeaderHeight) / CGFloat(visibleSlots)))
 
             VStack(alignment: .leading, spacing: 0) {
                 if showsReflection {
@@ -168,16 +192,24 @@ struct NextBeatWidgetEntryView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
-                HStack(alignment: .firstTextBaseline) {
+                HStack(alignment: .center) {
                     Text("NEXTBEAT")
                         .font(.caption.weight(.bold))
-                        .tracking(1.2)
+                        .tracking(1.5)
                         .foregroundStyle(ink)
                     Spacer(minLength: 4)
                     if let week = entry.week {
-                        Text("\(String(week.weekStart.suffix(5)))—\(String(week.days[6].date.suffix(5)))")
-                            .font(.caption2.monospacedDigit())
-                            .foregroundStyle(mutedInk)
+                        VStack(alignment: .trailing, spacing: 1) {
+                            Text(weekMonth(week))
+                                .font(.system(size: 14, weight: .semibold, design: .rounded).monospacedDigit())
+                                .foregroundStyle(ink)
+                            Text(weekYear(week))
+                                .font(.system(size: 8, weight: .medium, design: .rounded).monospacedDigit())
+                                .tracking(1.0)
+                                .foregroundStyle(mutedInk)
+                        }
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.82)
                     }
                 }
                 .frame(height: headingHeight, alignment: .top)
@@ -211,6 +243,10 @@ struct NextBeatWidgetEntryView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer(minLength: 8)
                 }
+                if showsFooterReflection {
+                    footerReflection
+                        .frame(height: footerReflectionHeight)
+                }
             }
             .padding(12)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -242,21 +278,29 @@ struct NextBeatWidgetEntryView: View {
         let capacity = hasOverflow ? max(1, slots - 1) : slots
         let indices = portraitItemIndices(in: day, limit: capacity)
         let hiddenCount = day.items.count - indices.count
-        let weekdays = ["一", "二", "三", "四", "五", "六", "日"]
+        let weekdays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+        let dayNumber = dateParts(day.date)?.day ?? index + 1
 
         return VStack(spacing: 0) {
-            VStack(spacing: 0) {
+            VStack(spacing: 2) {
                 Text(weekdays[index])
-                    .font(.system(size: min(scaledWeekday, 16), weight: .bold))
-                Text(String(day.date.suffix(2)))
-                    .font(.system(size: min(scaledDayNumber, 14), weight: .medium, design: .rounded).monospacedDigit())
+                    .font(.system(size: min(scaledWeekday, 15), weight: isToday ? .semibold : .medium))
+                    .foregroundStyle(isToday ? accent : mutedInk)
+                Text("\(dayNumber)")
+                    .font(.system(size: min(scaledDayNumber, 21), weight: .semibold, design: .rounded).monospacedDigit())
+                    .foregroundStyle(isToday ? surface : ink)
+                    .frame(minWidth: 24, minHeight: 24)
+                    .background {
+                        if isToday {
+                            RoundedRectangle(cornerRadius: 7).fill(accent)
+                        }
+                    }
             }
-            .foregroundStyle(isToday ? focusColor : ink)
             .frame(height: headerHeight)
             .frame(maxWidth: .infinity)
-            .background(isToday ? focusColor.opacity(colorScheme == .dark ? 0.11 : 0.06) : Color.clear)
+            .background(isToday ? accent.opacity(colorScheme == .dark ? 0.18 : 0.12) : Color.clear)
             .overlay(alignment: .bottom) {
-                Rectangle().fill(isToday ? focusColor : rule).frame(height: isToday ? 2 : 0.5)
+                Rectangle().fill(isToday ? accent : rule).frame(height: isToday ? 2 : 0.5)
             }
 
             ForEach(0..<slots, id: \.self) { slot in
@@ -281,21 +325,27 @@ struct NextBeatWidgetEntryView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .background(isToday ? focusColor.opacity(colorScheme == .dark ? 0.035 : 0.025) : Color.clear)
+        .background(isToday ? accent.opacity(colorScheme == .dark ? 0.10 : 0.065) : Color.clear)
     }
 
     private func timetableTask(_ item: ScheduleItem, in day: PlanDay, height: CGFloat) -> some View {
         let selected = isFocused(item, in: day)
         let upcoming = selected && entry.snapshot.phase == .gap
-        let timeColor = selected && !upcoming ? Color(red: 0.97, green: 0.94, blue: 0.90) : mutedInk
+        let startColor = selected && !upcoming ? Color(red: 0.99, green: 0.97, blue: 0.94) : upcoming ? upcomingAccent : ink
+        let endColor = selected && !upcoming ? Color(red: 0.97, green: 0.94, blue: 0.90).opacity(0.70) : mutedInk.opacity(0.78)
         let titleColor = selected && !upcoming ? Color(red: 0.99, green: 0.97, blue: 0.94) : ink
 
-        return VStack(alignment: .leading, spacing: 1) {
+        return VStack(alignment: .leading, spacing: 0) {
             Text(item.start)
-                .font(.system(size: gridTimeSize, weight: selected ? .bold : .medium, design: .rounded).monospacedDigit())
-                .foregroundStyle(timeColor)
+                .font(.system(size: gridTimeSize, weight: selected ? .bold : .semibold, design: .rounded).monospacedDigit())
+                .foregroundStyle(startColor)
                 .lineLimit(1)
-                .minimumScaleFactor(0.8)
+                .minimumScaleFactor(0.78)
+            Text(item.end)
+                .font(.system(size: gridEndTimeSize, weight: .regular, design: .rounded).monospacedDigit())
+                .foregroundStyle(endColor)
+                .lineLimit(1)
+                .minimumScaleFactor(0.78)
             Text(item.title)
                 .font(.system(size: gridTitleSize, weight: selected ? .semibold : .regular))
                 .foregroundStyle(titleColor)
@@ -322,7 +372,7 @@ struct NextBeatWidgetEntryView: View {
             }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(day.date) \(item.start) \(item.title)\(selected ? entry.snapshot.phase == .current ? "，正在进行" : "，下一项" : "")")
+        .accessibilityLabel("\(day.date) \(item.start) 至 \(item.end) \(item.title)\(selected ? entry.snapshot.phase == .current ? "，正在进行" : "，下一项" : "")")
     }
 
     private func portraitItemIndices(in day: PlanDay, limit: Int) -> [Int] {
@@ -353,7 +403,7 @@ struct NextBeatWidgetEntryView: View {
                 Circle().fill(footerAccent).frame(width: 5, height: 5)
                 Text(heading)
                 if let task = focusedTask {
-                    Text("· \(entry.snapshot.phase == .current ? task.item.end + " 结束" : task.item.start + " 开始")")
+                    Text("· \(task.item.start)—\(task.item.end)")
                         .monospacedDigit()
                 }
             }
@@ -384,6 +434,28 @@ struct NextBeatWidgetEntryView: View {
         .background(Color(red: 0.14, green: 0.15, blue: 0.16), in: RoundedRectangle(cornerRadius: 11))
     }
 
+    private var footerReflection: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 7) {
+            Text("自省")
+                .font(.system(size: 8, weight: .bold))
+                .tracking(1.1)
+                .foregroundStyle(accent)
+                .fixedSize()
+            Text(entry.reflection.footerText)
+                .font(.system(size: 9, weight: .medium))
+                .foregroundStyle(mutedInk)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 2)
+        .overlay(alignment: .top) {
+            Rectangle().fill(rule).frame(height: 0.5)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("底部自省语：\(entry.reflection.footerText)")
+    }
+
     private func weekView(expanded: Bool) -> some View {
         GeometryReader { geometry in
             let showsReflection = entry.reflection.isEnabled && !entry.reflection.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -412,7 +484,7 @@ struct NextBeatWidgetEntryView: View {
                         .font(expanded ? .title3.bold() : .subheadline.bold())
                     Spacer(minLength: 4)
                     if let week = entry.week {
-                        Text("\(String(week.weekStart.suffix(5)))—\(String(week.days[6].date.suffix(5)))")
+                        Text("\(weekMonth(week)) · \(weekYear(week))")
                             .font(.caption2.monospacedDigit())
                             .foregroundStyle(.secondary)
                     } else {
@@ -499,7 +571,7 @@ struct NextBeatWidgetEntryView: View {
                                     .font(.system(size: 6))
                                     .accessibilityHidden(true)
                             }
-                            Text(item.start)
+                            Text("\(item.start)—\(item.end)")
                                 .monospacedDigit()
                                 .foregroundStyle(highlighted ? accent : .secondary)
                             Text(item.title)
@@ -547,8 +619,8 @@ struct NextBeatWidgetEntryView: View {
                 HStack(spacing: 5) {
                     Image(systemName: entry.snapshot.phase == .current ? "bolt.fill" : "forward.fill")
                     Text(entry.snapshot.phase == .current
-                         ? "正在进行 · \(task.item.end) 结束"
-                         : "下一项 · \(task.item.start) 开始")
+                         ? "正在进行 · \(task.item.start)—\(task.item.end)"
+                         : "下一项 · \(task.item.start)—\(task.item.end)")
                 }
                 .font(.caption2.monospacedDigit().weight(.bold))
                 .foregroundStyle(accent)
@@ -634,10 +706,11 @@ struct NextBeatWidgetEntryView: View {
         switch entry.snapshot.phase {
         case .current:
             if let current = entry.snapshot.current {
-                Text("正在进行 · \(current.item.end) 结束")
+                Text("正在进行 · \(current.item.start)—\(current.item.end)")
                     .font(.caption2.monospacedDigit().weight(.semibold))
                     .foregroundStyle(accent)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.75)
                 Text(current.item.title)
                     .font(isSmall ? .headline : .title3.bold())
                     .lineLimit(isSmall ? 2 : 2)
@@ -649,7 +722,7 @@ struct NextBeatWidgetEntryView: View {
                         .lineLimit(1)
                 }
                 if let next = entry.snapshot.next {
-                    Text("下一项  \(next.item.start)  \(next.item.title)")
+                    Text("下一项  \(next.item.start)—\(next.item.end)  \(next.item.title)")
                         .font(isSmall ? .caption2.monospacedDigit() : .caption.monospacedDigit())
                         .foregroundStyle(.secondary)
                         .lineLimit(isSmall ? 2 : 1)
@@ -661,10 +734,11 @@ struct NextBeatWidgetEntryView: View {
             }
         case .gap:
             if let next = entry.snapshot.next {
-                Text("当前空档 · 下一项 \(next.item.start)")
+                Text("当前空档 · \(next.item.start)—\(next.item.end)")
                     .font(.caption2.monospacedDigit().weight(.semibold))
                     .foregroundStyle(accent)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.75)
                 Text(next.item.title)
                     .font(isSmall ? .headline : .title3.bold())
                     .lineLimit(2)
@@ -806,5 +880,20 @@ private func previewEntry(_ hour: Int, _ minute: Int, day: Int = 5,
                                 familyOverride: .systemExtraLargePortrait)
             .frame(width: 350, height: 565)
             .environment(\.dynamicTypeSize, .accessibility1)
+    }
+}
+
+#Preview("纵向超大 · 关闭自省语") {
+    if #available(iOS 27.0, *) {
+        NextBeatWidgetEntryView(
+            entry: previewEntry(9, 45, day: 7, plans: [PreviewFixtures.denseWeek],
+                                reflection: ReflectionSettings(
+                                    isEnabled: false,
+                                    text: ReflectionSettings.defaultValue.text,
+                                    footerEnabled: false,
+                                    footerText: ReflectionSettings.defaultFooterText)),
+            familyOverride: .systemExtraLargePortrait
+        )
+        .frame(width: 350, height: 565)
     }
 }

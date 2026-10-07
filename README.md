@@ -4,17 +4,17 @@
 
 ## 当前开发状态
 
-项目文件：`NextBeat.xcodeproj`。已在 macOS 27、Xcode 27 和 iOS 27 的 iPhone 17 模拟器上构建并运行。核心 XCTest、命令行检查与模拟器界面测试覆盖计划导入、逐项编辑、重启后持久保存和自省语开关。中号与纵向超大组件都已实际添加到模拟器主屏幕；组件能读取共享计划及设置。高密度课表的实机尺寸截图见 `Screenshots/nextbeat-timetable-current.png`、`Screenshots/nextbeat-timetable-dark.png`、`Screenshots/nextbeat-timetable-reflection-off.png` 和 `Screenshots/nextbeat-timetable-large-text.png`。真机安装和个人账号签名尚须由你按下文在 Xcode 中完成。
+项目文件：`NextBeat.xcodeproj`。已在 macOS 27、Xcode 27 和 iOS 27 的 iPhone 17 Pro Max 模拟器上构建并运行。核心 XCTest、命令行检查与模拟器界面测试覆盖计划导入、逐项编辑、重启后持久保存和自省语开关。中号与纵向超大组件都已实际添加到模拟器主屏幕；组件能读取共享计划及设置。当前设计的真尺寸截图见 `Screenshots/nextbeat-widget-refined-light.png` 与 `Screenshots/nextbeat-widget-refined-dark.png`。真机安装和个人账号签名尚须由你按下文在 Xcode 中完成。
 
 ## 主屏幕组件与自省语
 
-NextBeat 提供小号、中号、普通大号及 **iOS 27 的纵向超大号**。Apple 的 [纵向超大号说明](https://developer.apple.com/documentation/widgetkit/widgetfamily/systemextralargeportrait)确认它可放在 iPhone 主屏幕；在当前 iPhone 17 模拟器上，它占据接近整页的主屏幕区域，但系统仍保留状态栏、底部 Dock 等空间。iOS 17–26 可选普通大号。
+NextBeat 提供小号、中号、普通大号及 **iOS 27 的纵向超大号**。Apple 的 [纵向超大号说明](https://developer.apple.com/documentation/widgetkit/widgetfamily/systemextralargeportrait)确认它可放在 iPhone 主屏幕；在当前 iPhone 17 Pro Max 模拟器上，它占据接近整页的主屏幕区域，但系统仍保留状态栏、底部 Dock 等空间。iOS 17–26 可选普通大号。
 
-纵向超大号顶部显示可选自省语；中间是周一到周日的**七列课表**，每项用紧凑的“开始时间＋标题”排版。iPhone 17 模拟器上已用每天 10 项、共 70 项的计划检查实际显示密度。当天列用淡色区分，正在进行的任务用深色块与朱红细线标记；空档时以暖铜色突出下一项。底部深色区域单独展示当前／下一任务的时间、完整标题和提醒语。长标题在小格中截断，底部可显示更多内容；超出可见格数时显示 `+N`，并优先让当前／下一任务留在可见范围。轻点组件可在 App 周视图查看全部事项。普通大号使用一行一天的摘要布局。
+纵向超大号顶部显示可选自省语；右上角以月份和年份标示本周，具体日期留给七列的日头。中间是周一到周日的**七列课表**，每项将开始与结束时间上下对齐，开始时间用较深字重、结束时间用较浅颜色，第三行显示标题。iPhone 模拟器上已用每天 10 项、共 70 项的计划检查实际显示密度。当天日期使用朱红色块，并用整列淡色区分；正在进行的任务用深色块与朱红细线标记，空档时以暖铜色突出下一项。下方深色区域单独展示当前／下一任务的完整时间范围、标题和提醒语，最底部还有一条可单独设置的简短自省语。长标题在小格中截断，深色区域可显示更多内容；超出可见格数时显示 `+N`，并优先让当前／下一任务留在可见范围。轻点组件可在 App 周视图查看全部事项。普通大号使用一行一天的摘要布局。
 
-配色取自 App 图标：暖纸白、石墨黑与少量朱红；深色模式使用深石墨背景与柔和米白文字。大字体模式会放大时间、标题及底部提醒区，减少可见格数并用 `+N` 提示其余事项；完整内容始终可在 App 内查看。组件为任务起止和跨日节点准备滚动时间线，每次预生成最多 36 条记录，并提前请求下一批，避免密集计划产生过大的 WidgetKit 归档。系统决定实际展示和重载时机，不能保证按秒或严格按分钟切换。
+配色取自 App 图标：暖纸白、石墨黑与少量朱红；深色模式使用深石墨背景与柔和米白文字。大字体模式会放大标题及底部提醒区，课表数字限制在能完整显示起止时间的字号范围；可见格数减少时用 `+N` 提示其余事项，完整内容始终可在 App 内查看。组件为任务起止和跨日节点准备滚动时间线，每次预生成最多 36 条记录，并提前请求下一批，避免密集计划产生过大的 WidgetKit 归档。系统决定实际展示和重载时机，不能保证按秒或严格按分钟切换。
 
-在 App **设置 → 桌面大组件** 可修改或关闭自省语，点“保存并更新小组件”。关闭仅隐藏文字，内容会保留以便重新开启。此设置保存在同一个 App Group 的 `reflection-v1.json`；周计划仍在 `plans-v1.json`，导入／导出的周计划 JSON 格式没有变化。如果共享存储配置错误，App 和组件会明确报错。
+在 App **设置** 中，顶部和底部自省语可以分别修改或关闭，点“保存并更新小组件”。关闭仅隐藏对应文字，内容会保留以便重新开启。旧版 `reflection-v1.json` 会自动补齐新增的底部设置，不丢失已有顶部文字。两处设置仍保存在同一个 App Group 的 `reflection-v1.json`；周计划仍在 `plans-v1.json`，导入／导出的周计划 JSON 格式没有变化。如果共享存储配置错误，App 和组件会明确报错。
 
 ## 首次安装 Xcode
 
@@ -39,10 +39,10 @@ NextBeat 提供小号、中号、普通大号及 **iOS 27 的纵向超大号**�
 2. 复制 `Examples/week-2026-10-05.json`，在 App 的“导入”页粘贴，点“验证并预览”与“确认保存”。确认“周计划”可查看七天事项。
 3. 模拟器主屏幕长按空白处 → 点添加小组件 → 搜索 **NextBeat** → 在 iOS 27 选纵向超大号；旧系统选普通大号。可用 Preview 查看固定时刻；不要用等待来验收时间线。
 4. 在“周计划”修改一项标题与时间，回到主屏幕观察小组件；WidgetKit 可能延迟重新载入。结束 App 进程并重新打开，核对编辑后的计划仍在。
-5. 在 App“设置”关闭自省语并保存，核对组件顶部句子消失；重新开启后应恢复。在 Xcode Canvas 打开 App 和 Widget 文件的 `#Preview`。预览覆盖当前事项、空档、全天结束、无计划、长标题、深色模式及大字。
+5. 在 App“设置”分别关闭顶部与底部自省语并保存，核对组件相应句子消失；重新开启后应恢复。在 Xcode Canvas 打开 App 和 Widget 文件的 `#Preview`。预览覆盖当前事项、空档、全天结束、无计划、长标题、深色模式、大字及关闭自省语。
 6. 验证失败替换：先保存有效周计划，再把同周 JSON 的结束时间改成早于开始时间，点“验证并预览”；应报错且旧计划仍在。`24:00`、准确开始/结束边界和空档由 `Scripts/run-core-checks.sh` 检查。
 
-已保存的模拟器截图：`Screenshots/nextbeat-home-current.png`、`Screenshots/nextbeat-timetable-current.png`、`Screenshots/nextbeat-timetable-dark.png`、`Screenshots/nextbeat-timetable-reflection-off.png`、`Screenshots/nextbeat-timetable-large-text.png`。后四张展示每天 8–10 项时的七列课表、深色模式、关闭自省语与系统大字体。你也可用 `xcrun simctl io booted screenshot Screenshots/nextbeat-new.png` 重新截图。
+已保存的模拟器截图：`Screenshots/nextbeat-home-current.png`、`Screenshots/nextbeat-widget-refined-light.png`、`Screenshots/nextbeat-widget-refined-dark.png` 和 `Screenshots/nextbeat-widget-refined-large-text.png`。此前版本截图也保留在 `Screenshots/` 供对比。你可用 `xcrun simctl io booted screenshot Screenshots/nextbeat-new.png` 重新截图。
 
 ## iPhone 安装：个人免费 Apple 账号
 
