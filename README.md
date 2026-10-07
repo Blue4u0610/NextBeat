@@ -54,10 +54,10 @@ NextBeat 提供小号、中号、普通大号及 **iOS 27 的纵向超大号**�
 4. 用 USB 连接并解锁 iPhone；若出现提示，在手机上点“信任此电脑”。在 Xcode 顶部选择该 iPhone 作为运行目的地。若 Xcode 要求注册设备或修复签名，按界面提示完成。无需购买 Apple Developer Program 会员。
 5. 在 iPhone **设置 → 隐私与安全性 → 开发者模式** 打开开关，按提示重启并再次确认；本机连接的手机已完成此步骤。回到 Xcode 按 **⌘R**，等待 App 与内含的 Widget Extension 一同安装。首次签名时若 macOS 钥匙串提示允许 `codesign` 使用 **Apple Development** 私钥，请在本机输入 Mac 登录密码并允许，不要把密码发给任何人。
 6. 如安装后点击 App 显示“未受信任的开发者”，在 iPhone **设置 → 通用 → VPN 与设备管理 → 开发者 App** 中选择该个人开发者并点“信任”；若未显示该条目，先点一次主屏幕上的 NextBeat 图标。完成后重新打开 App。
-7. 在 iPhone 主屏幕长按空白处，点 **编辑/添加小组件**（具体文字取决于 iOS 版本），搜索 **NextBeat**。iOS 27 选择纵向超大号；较旧的 iOS 选择普通大号。点小组件会打开 App。
+7. 在 iPhone 主屏幕长按空白处，点 **编辑/添加小组件**（具体文字取决于 iOS 版本），搜索 **NextBeat**。iOS 27 选择纵向超大号；较旧的 iOS 选择普通大号。点小组件会打开 App。如果从旧的 `com.example.nextbeat` 测试版升级，先移除旧小组件再添加新版；两者的 Bundle ID 不同，旧组件不会自动转为新版。
 8. 首次运行若 App 显示共享存储错误，检查两个 target 的 Team、Bundle ID、App Groups ID 和签名是否一致，再重新运行。不能把数据改存到 App 的私有目录来掩盖错误。
 
-Apple 的 [免费个人账号说明](https://developer.apple.com/help/account/basics/about-your-developer-account)指出：个人签发的设备安装 provisioning profile **7 天后过期**。过期后重新连接 iPhone，在 Xcode 选设备并按 **⌘R** 重新签名、构建和安装；每台设备最多 3 个此类 App，设备及 App ID 也有免费额度限制。重新安装时保持相同 Bundle ID 和 App Group ID，以免改变共享存储位置；操作前建议从 App 的“导出 JSON”备份计划。Xcode 在签名时如报告 App Groups 对该账号不可用，应检查具体错误，不能声称 Widget 已可靠共享数据。
+Apple 的 [免费个人账号说明](https://developer.apple.com/help/account/basics/about-your-developer-account)指出：个人签发的设备安装 provisioning profile **7 天后过期**。过期后重新连接 iPhone，在 Xcode 选设备并按 **⌘R** 重新签名、构建和安装；每台设备最多 3 个此类 App，设备及 App ID 也有免费额度限制。重新安装时保持相同 Bundle ID 和 App Group ID，以免改变共享存储位置；操作前建议从 App 的“导出 JSON”备份计划。**更改 Bundle ID 或 App Group ID 不会自动迁移旧计划**，应先从旧版导出 JSON，再在新版导入。Xcode 在签名时如报告 App Groups 对该账号不可用，应检查具体错误，不能声称 Widget 已可靠共享数据。
 
 ## 开发命令
 
