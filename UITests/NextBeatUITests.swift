@@ -26,13 +26,13 @@ final class NextBeatUITests: XCTestCase {
         let title = app.textFields.element(boundBy: 0)
         XCTAssertTrue(title.waitForExistence(timeout: 10))
         title.tap()
-        title.typeText("Edited ")
+        title.typeText("Updated ")
         app.buttons["保存事项"].tap()
-        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Edited ")).firstMatch.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Updated ")).firstMatch.waitForExistence(timeout: 10))
 
         app.terminate()
         app.launch()
-        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Edited ")).firstMatch.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Updated ")).firstMatch.waitForExistence(timeout: 10))
     }
 
     private func makeCurrentWeekJSON() -> String {

@@ -20,7 +20,11 @@ struct ImportView: View {
                 }
                 HStack {
                     Button {
-                        json = UIPasteboard.general.string ?? ""
+                        if let pasted = UIPasteboard.general.string, !pasted.isEmpty {
+                            json = pasted
+                        } else {
+                            issue = "剪贴板中没有可读取的文本。请在输入框中长按并选择“粘贴”。"
+                        }
                     } label: {
                         Label("从剪贴板粘贴", systemImage: "doc.on.clipboard")
                     }

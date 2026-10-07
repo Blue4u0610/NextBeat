@@ -4,7 +4,7 @@
 
 ## 当前开发状态
 
-项目文件：`NextBeat.xcodeproj`。已在 macOS 27、Xcode 27 和 iOS 27 的 iPhone 17 模拟器上构建并运行。核心 XCTest、26 项命令行检查与模拟器界面测试均已通过。界面测试覆盖七天计划验证与保存、当前和下一项显示、逐项编辑，以及终止并重启 App 后继续读取计划。截图见 `Screenshots/nextbeat-home-current.png`。真机安装和个人账号签名尚须由你按下文在 Xcode 中完成。
+项目文件：`NextBeat.xcodeproj`。已在 macOS 27、Xcode 27 和 iOS 27 的 iPhone 17 模拟器上构建并运行。5 项核心 XCTest、26 项命令行检查与 1 项模拟器界面测试均已通过。界面测试覆盖七天计划验证与保存、当前和下一项显示、逐项编辑，以及终止并重启 App 后继续读取计划。中号小组件已实际添加到模拟器主屏幕；编辑标题后，小组件读到新值，点击也能打开 App。截图见 `Screenshots/nextbeat-home-current.png`、`Screenshots/nextbeat-widget-current.png` 和 `Screenshots/nextbeat-widget-updated.png`。真机安装和个人账号签名尚须由你按下文在 Xcode 中完成。
 
 ## 首次安装 Xcode
 
@@ -32,7 +32,7 @@
 5. 在 Xcode Canvas 打开 App 和 Widget 文件的 `#Preview`。预览覆盖当前事项、空档、全天结束、无计划、长标题、深色模式和小号；Widget 预览时间是固定样例，不用等待时钟变化。
 6. 验证失败替换：先保存有效周计划，再把同周 JSON 的结束时间改成早于开始时间，点“验证并预览”；应报错且旧计划仍在。`24:00`、准确开始/结束边界和空档由 `Scripts/run-core-checks.sh` 检查。
 
-已保存的模拟器首页截图：`Screenshots/nextbeat-home-current.png`。你也可用 `xcrun simctl io booted screenshot Screenshots/nextbeat-home.png` 重新截图。Widget 截图应在主屏幕添加后用同一命令保存为 `Screenshots/nextbeat-widget.png`。
+已保存的模拟器首页与 Widget 截图：`Screenshots/nextbeat-home-current.png`、`Screenshots/nextbeat-widget-current.png`、`Screenshots/nextbeat-widget-updated.png`。后两张分别记录修改标题前后的中号组件。你也可用 `xcrun simctl io booted screenshot Screenshots/nextbeat-new.png` 重新截图。
 
 ## iPhone 安装：个人免费 Apple 账号
 
