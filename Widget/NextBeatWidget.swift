@@ -303,13 +303,16 @@ struct NextBeatWidgetEntryView: View {
             .frame(maxWidth: .infinity)
             .background(isToday ? accent.opacity(colorScheme == .dark ? 0.18 : 0.12) : Color.clear)
             .overlay(alignment: .bottom) {
-                Rectangle().fill(isToday ? accent : rule).frame(height: isToday ? 2 : 0.5)
+                Rectangle().fill(rule).frame(height: 0.5)
             }
 
             ForEach(0..<slots, id: \.self) { slot in
                 Group {
                     if slot < indices.count {
-                        timetableTask(day.items[indices[slot]], in: day, height: cellHeight)
+                        timetableTask(
+                            day.items[indices[slot]], in: day, height: cellHeight,
+                            showsDivider: slot + 1 < indices.count || hasOverflow
+                        )
                     } else if hasOverflow && slot == indices.count {
                         VStack(spacing: 0) {
                             Text("+\(hiddenCount)")
@@ -331,7 +334,7 @@ struct NextBeatWidgetEntryView: View {
         .background(isToday ? accent.opacity(colorScheme == .dark ? 0.10 : 0.065) : Color.clear)
     }
 
-    private func timetableTask(_ item: ScheduleItem, in day: PlanDay, height: CGFloat) -> some View {
+    private func timetableTask(_ item: ScheduleItem, in day: PlanDay, height: CGFloat, showsDivider: Bool) -> some View {
         let selected = isFocused(item, in: day)
         let upcoming = selected && entry.snapshot.phase == .gap
         let startColor = selected && !upcoming ? Color(red: 0.99, green: 0.97, blue: 0.94) : upcoming ? upcomingAccent : ink
@@ -372,6 +375,15 @@ struct NextBeatWidgetEntryView: View {
                     .fill(focusColor)
                     .frame(width: 2, height: height - 4)
                     .padding(.leading, 1)
+            }
+        }
+        .overlay(alignment: .bottom) {
+            if showsDivider && !selected {
+                Rectangle()
+                    .fill(ink.opacity(colorScheme == .dark ? 0.23 : 0.20))
+                    .frame(height: 0.75)
+                    .padding(.horizontal, 4)
+                    .padding(.bottom, 1)
             }
         }
         .accessibilityElement(children: .combine)
