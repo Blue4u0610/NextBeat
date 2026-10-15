@@ -1,5 +1,6 @@
-这里保存 iPhone 17 Pro Max（iOS 27）模拟器的真实截图。
+这里保存 iPhone 17 系列（iOS 27）模拟器的真实截图。
 
+- `nextbeat-import-actions.png`：iPhone 17 导入页，提供“粘贴并预览”和“粘贴并应用”；JSON 编辑区固定高度、可内部滚动。
 - `nextbeat-widget-refined-light.png`：最新版浅色超大组件，每天约 10 项，任务开始和结束时间上下排列。
 - `nextbeat-widget-refined-dark.png`：同一版深色组件。
 - `nextbeat-widget-refined-large-text.png`：系统辅助功能大字体下的深色组件。此时优先保持时间可读，网格显示部分事项和剩余数量。

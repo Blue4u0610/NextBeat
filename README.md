@@ -29,18 +29,20 @@ NextBeat 提供小号、中号、普通大号及 **iOS 27 的纵向超大号**�
 
 示例在 `Examples/week-2026-10-05.json`。JSON 必须包含 `week_start`（周一）、有效 IANA `timezone` 和从周一到周日连续排列的七个 `days`。无事项的日期写 `"items": []`。时间使用 `HH:mm`；开始为 `00:00` 至 `23:59`，结束可用 `24:00` 表示该日期结束时的次日零点。除此以外不能跨午夜。每项必须有 `start`、`end`、非空 `title` 和字符串 `tip`（可为空）。
 
-导入页先“验证并预览”，再“确认保存”。验证失败会指出日期与事项，原数据不会被替换。同一 `week_start` 完整替换旧周；不同周分别保存。周视图可逐项编辑、添加、删除，并复制或分享当前周 JSON。修改时间后会自动按开始时间重新排序，重叠仍会报错。
+导入页提供两种剪贴板操作：**粘贴并预览**会读取、验证并展示七天计划，点击“确认保存这一周”后才保存；**粘贴并应用**会读取剪贴板，通过完整验证后直接保存，不再要求确认。两种方式都会完整验证，失败会指出日期与事项，原数据不会被替换。同一 `week_start` 完整替换旧周；不同周分别保存。剪贴板为空时会报错，不会误用输入框中的旧内容。仍可在 JSON 编辑区手动修改，再点“验证并预览”。保存后会请求 WidgetKit 刷新。
+
+周视图可逐项编辑、添加、删除，并复制或分享当前周 JSON。修改时间后会自动按开始时间重新排序，重叠仍会报错。
 
 **时区规则：** 所有日期和时刻按 JSON 的 `timezone` 解释；不会使用模拟器当前时区去猜测。夏令时跳过而不存在的当地时间，以及回拨时重复出现两次而无法判定的时间，都会被拒绝并指出日期与事项。WidgetKit 会为事项开始、结束和日期切换建立 timeline；系统决定实际展示与刷新时机，不保证秒级切换。
 
 ## 模拟器验收
 
 1. 在 Xcode 选 NextBeat scheme 和 iPhone 模拟器，按 ⌘R。首次打开应显示“本周还没有计划”；若出现“共享存储错误”，检查两个 target 的 App Group 设置。
-2. 复制 `Examples/week-2026-10-05.json`，在 App 的“导入”页粘贴，点“验证并预览”与“确认保存”。确认“周计划”可查看七天事项。
+2. 复制 `Examples/week-2026-10-05.json`，在 App 的“导入”页点“粘贴并预览”，检查后点“确认保存这一周”；也可点“粘贴并应用”，通过验证后直接保存。确认“周计划”可查看七天事项。
 3. 模拟器主屏幕长按空白处 → 点添加小组件 → 搜索 **NextBeat** → 在 iOS 27 选纵向超大号；旧系统选普通大号。可用 Preview 查看固定时刻；不要用等待来验收时间线。
 4. 在“周计划”修改一项标题与时间，回到主屏幕观察小组件；WidgetKit 可能延迟重新载入。结束 App 进程并重新打开，核对编辑后的计划仍在。
 5. 在 App“设置 → 组件底部”把栏标题改成自己的文字，保存并重启 App，确认标题仍在且组件跟着更新；标题旁的 × 可快速清空后重写。分别关闭顶部与底部自省语并保存，核对组件相应句子消失；重新开启后应恢复。在 Xcode Canvas 打开 App 和 Widget 文件的 `#Preview`。预览覆盖当前事项、空档、全天结束、无计划、长标题、深色模式、大字、关闭自省语及自定义底部标题。
-6. 验证失败替换：先保存有效周计划，再把同周 JSON 的结束时间改成早于开始时间，点“验证并预览”；应报错且旧计划仍在。`24:00`、准确开始/结束边界和空档由 `Scripts/run-core-checks.sh` 检查。
+6. 验证失败替换：先保存有效周计划，再复制结束时间早于开始时间的同周 JSON，点“粘贴并应用”；应报错，重启 App 后旧计划仍在。空剪贴板也不能应用输入框中的旧草稿。“粘贴并预览”在确认前不能改变已存计划。以上两条路径由界面测试覆盖。`24:00`、准确开始/结束边界和空档由 `Scripts/run-core-checks.sh` 检查。
 
 已保存的模拟器截图：`Screenshots/nextbeat-home-current.png`、`Screenshots/nextbeat-widget-refined-light.png`、`Screenshots/nextbeat-widget-refined-dark.png` 和 `Screenshots/nextbeat-widget-refined-large-text.png`。此前版本截图也保留在 `Screenshots/` 供对比。你可用 `xcrun simctl io booted screenshot Screenshots/nextbeat-new.png` 重新截图。
 
@@ -63,7 +65,7 @@ Apple 的 [免费个人账号说明](https://developer.apple.com/help/account/ba
 
 - `Scripts/run-core-checks.sh`：在只有命令行 Swift 工具时检查模型、时区、`24:00`、边界、timeline、原子替换与多周保存。
 - `swift test`：运行共享模型的 XCTest。
-- `xcodebuild -project NextBeat.xcodeproj -scheme NextBeat -destination 'platform=iOS Simulator,name=iPhone 17' test`：运行 App 界面测试。Debug 界面测试使用启动环境变量把测试 JSON 预填入导入页；正式运行和 Release 包不会读取这一测试变量。
+- `xcodebuild -project NextBeat.xcodeproj -scheme NextBeat -destination 'platform=iOS Simulator,name=iPhone 17' test`：运行 App 界面测试。Debug 界面测试使用启动环境变量预填输入框及模拟器剪贴板，验证两种导入路径；普通启动不设置这些变量，Release 包也不会读取它们。
 - `xcodegen generate`：按 `project.yml` 重新生成 `NextBeat.xcodeproj`。仓库已包含生成好的项目，普通使用不需要安装 XcodeGen。若你在 Xcode 手动改了签名，再运行此命令会覆盖项目配置；需要保留时请同步修改 `project.yml`。
 - `xcodebuild -project NextBeat.xcodeproj -scheme NextBeat -destination 'platform=iOS Simulator,name=你的模拟器名称' build`：编译 App 和 Widget。
 

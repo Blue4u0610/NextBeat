@@ -1,6 +1,90 @@
 import XCTest
 
 final class NextBeatUITests: XCTestCase {
+    func testPastePreviewRequiresConfirmation() {
+        let app = XCUIApplication()
+        launchImport(app, clipboard: importJSON(title: "原计划"))
+        app.buttons["粘贴并应用"].tap()
+        XCTAssertTrue(app.staticTexts["import-success"].waitForExistence(timeout: 10))
+
+        app.terminate()
+        launchImport(app, clipboard: importJSON(title: "预览待确认"))
+        app.buttons["粘贴并预览"].tap()
+        XCTAssertTrue(app.staticTexts["预览 · \(weekStart())"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["import-success"].exists)
+        app.tabBars.buttons["今日"].tap()
+        XCTAssertTrue(app.staticTexts["原计划"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["预览待确认"].exists)
+
+        app.tabBars.buttons["导入"].tap()
+        app.buttons["粘贴并预览"].tap()
+        let save = app.buttons["确认保存这一周"]
+        for _ in 0..<12 where !save.isHittable { app.swipeUp() }
+        XCTAssertTrue(save.isHittable)
+        save.tap()
+        app.tabBars.buttons["今日"].tap()
+        XCTAssertTrue(app.staticTexts["预览待确认"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["原计划"].exists)
+    }
+
+    func testPasteApplyPersistsAndRejectsInvalidReplacement() {
+        let app = XCUIApplication()
+        launchImport(app, clipboard: importJSON(title: "直接应用成功"))
+        let layout = XCTAttachment(screenshot: app.screenshot())
+        layout.name = "导入页 · 两种粘贴操作"
+        layout.lifetime = .keepAlways
+        add(layout)
+        app.buttons["粘贴并应用"].tap()
+        XCTAssertTrue(app.staticTexts["import-success"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["确认保存这一周"].exists)
+        XCTAssertTrue((app.textViews["周计划 JSON"].value as? String ?? "").contains("直接应用成功"))
+        app.terminate()
+        app.launchEnvironment = [:]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["直接应用成功"].firstMatch.waitForExistence(timeout: 10))
+
+        // None of these may replace the saved week or apply the valid editor draft.
+        for clipboard in [importJSON(title: "无效替换", end: "00:00"), "{broken JSON}", "  \n  "] {
+            app.terminate()
+            launchImport(app, clipboard: clipboard)
+            app.buttons["粘贴并应用"].tap()
+            XCTAssertTrue(app.staticTexts["import-error"].waitForExistence(timeout: 10))
+            XCTAssertFalse(app.staticTexts["import-success"].exists)
+            XCTAssertFalse(app.buttons["确认保存这一周"].exists)
+            app.terminate()
+            app.launchEnvironment = [:]
+            app.launch()
+            XCTAssertTrue(app.staticTexts["直接应用成功"].firstMatch.waitForExistence(timeout: 10))
+            XCTAssertFalse(app.staticTexts["编辑区旧草稿"].exists)
+            XCTAssertFalse(app.staticTexts["无效替换"].exists)
+        }
+    }
+
+    private func launchImport(_ app: XCUIApplication, clipboard: String) {
+        app.launchEnvironment["NEXTBEAT_UI_TEST_JSON"] = importJSON(title: "编辑区旧草稿")
+        app.launchEnvironment["NEXTBEAT_UI_TEST_CLIPBOARD"] = clipboard
+        app.launch()
+        app.tabBars.buttons["导入"].tap()
+        XCTAssertTrue(app.buttons["粘贴并应用"].waitForExistence(timeout: 10))
+    }
+
+    private func importJSON(title: String, end: String = "24:00") -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(identifier: "America/New_York")!
+        formatter.dateFormat = "yyyy-MM-dd"
+        var calendar = formatter.calendar!
+        calendar.timeZone = formatter.timeZone
+        let monday = formatter.date(from: weekStart())!
+        let days: [[String: Any]] = (0..<7).map { offset in
+            ["date": formatter.string(from: calendar.date(byAdding: .day, value: offset, to: monday)!),
+             "items": [["start": "00:00", "end": end, "title": title, "tip": "保持自己的节奏"]]]
+        }
+        let payload: [String: Any] = ["week_start": weekStart(), "timezone": "America/New_York", "days": days]
+        return String(decoding: try! JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted), as: UTF8.self)
+    }
+
     func testFooterTitleCanBeEditedAndPersists() {
         let app = XCUIApplication()
         app.launch()
